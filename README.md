@@ -1,7 +1,7 @@
 ![Keywordo-kun Hero Image](Keywordo-kun%20image.png)
 
 ### 📺 Full Video Walkthrough & Setup Guide
-**Watch the full demo and setup guide on YouTube:** **[https://www.youtube.com/watch?v=r9WMbzfY-mg&t]**
+[![Watch the full demo and setup guide on YouTube](Keywordo-kun%20image.png)](https://www.youtube.com/watch?v=r9WMbzfY-mg)
 
 This repository contains the complete workflow for **Keywordo-kun**, an AI agent specialized in competitor analysis, keyword research, and automated SEO content creation.
 
