@@ -40,7 +40,7 @@ To get this workflow running, you will need accounts and API keys for the follow
     * Create a new, empty workflow in n8n and import the `Keywordo-kun (Tools).json` file.
     * Create a second workflow and import the `Keywordo-kun (Articollo Agent).json` file.
 2.  **Configure Tools Workflow:**
-    * Open the "Tools" workflow and configure each HTTP Request node with your **DataForSEO** API credentials, as shown in the [video guide]([LINK_TO_YOUR_YOUTUBE_VIDEO]).
+    * Open the "Tools" workflow and configure each HTTP Request node with your **DataForSEO** API credentials, as shown in the [video guide]([https://www.youtube.com/watch?v=r9WMbzfY-mg&t]).
     * Configure the Firecrawl node with your **Firecrawl** API key.
     * Save and activate this workflow.
 3.  **Configure Agent Workflow:**
@@ -50,7 +50,7 @@ To get this workflow running, you will need accounts and API keys for the follow
 4.  **Deploy Frontend:**
     * Go to v0.dev and import the `Keywordo-kun Chat Interface (v0.dev).zip` file.
     * Get the **production webhook URL** from your "Agent" n8n workflow.
-    * In the v0.dev chat prompt, ask it to replace the old webhook URL with your new one, as shown in the [video guide]([LINK_TO_YOUR_YOUTUBE_VIDEO]).
+    * In the v0.dev chat prompt, ask it to replace the old webhook URL with your new one, as shown in the [video guide]([https://www.youtube.com/watch?v=r9WMbzfY-mg&t]).
 5.  **Activate & Test:**
     * Activate your "Agent" n8n workflow.
     * Start chatting with your agent in the v0.dev interface!
