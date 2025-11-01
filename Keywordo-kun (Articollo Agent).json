@@ -1,0 +1,3272 @@
+{
+  "name": "Articollo Agent - Keywordo-kun",
+  "nodes": [
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "0d95f36f-5e06-4c33-b781-bb7219797386",
+              "name": "firecrawl_api_key",
+              "value": "<<YOUR API KEY>>",
+              "type": "string"
+            },
+            {
+              "id": "8c50130c-d388-4bee-8f89-0de9df0ffd11",
+              "name": "Message",
+              "value": "={{ $json.Message || $json.content.parts[0].text }}",
+              "type": "string"
+            },
+            {
+              "id": "983616ae-b2d4-45f6-a1b7-b28586725d1e",
+              "name": "cf_connecting_ip",
+              "value": "={{ $('Webhook').first().json.headers['cf-connecting-ip'] }}",
+              "type": "string"
+            },
+            {
+              "id": "5a1e610c-b197-4e66-bf4d-1df3a55b302f",
+              "name": "country",
+              "value": "={{ $('Webhook').item.json.body.country }}",
+              "type": "string"
+            },
+            {
+              "id": "edeecdd9-6300-41d5-a418-11584e32da46",
+              "name": "language",
+              "value": "={{ $('Webhook').item.json.body.language }}",
+              "type": "string"
+            },
+            {
+              "id": "2e30846d-56fc-48fb-91c9-e9569c0d2c5f",
+              "name": "dataforseo_language_code",
+              "value": "={{ $('Code').item.json.language_code }}",
+              "type": "string"
+            },
+            {
+              "id": "5a571335-7364-4930-a103-29d15ee74c95",
+              "name": "dataforseo_location_code",
+              "value": "={{ $('Code').item.json.location_code }}",
+              "type": "string"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.4,
+      "position": [
+        864,
+        -64
+      ],
+      "id": "b8601b95-a298-484c-aa16-0a9ebfaaedac",
+      "name": "🦺 Set Data"
+    },
+    {
+      "parameters": {
+        "description": "Call this tool to check competitor keywords. The query should be the competitor url.",
+        "workflowId": {
+          "__rl": true,
+          "value": "edWM6uMdKMV69iXQ",
+          "mode": "list",
+          "cachedResultName": "Laboratory — Keywordo-kun (Tools)"
+        },
+        "workflowInputs": {
+          "mappingMode": "defineBelow",
+          "value": {
+            "language_code": "={{ $json.dataforseo_language_code }}",
+            "country_code": "={{ $json.dataforseo_location_code }}",
+            "url": "={{ /*n8n-auto-generated-fromAI-override*/ $fromAI('url', `Good input \"example.com\".\nBad Input: \"https://example.com/\"`, 'string') }}",
+            "function": "ranked_keywords"
+          },
+          "matchingColumns": [],
+          "schema": [
+            {
+              "id": "function",
+              "displayName": "function",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "canBeUsedToMatch": true,
+              "type": "string"
+            },
+            {
+              "id": "keyword",
+              "displayName": "keyword",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "canBeUsedToMatch": true,
+              "type": "string",
+              "removed": true
+            },
+            {
+              "id": "country_code",
+              "displayName": "country_code",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "canBeUsedToMatch": true,
+              "type": "string"
+            },
+            {
+              "id": "language_code",
+              "displayName": "language_code",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "canBeUsedToMatch": true,
+              "type": "string"
+            },
+            {
+              "id": "url",
+              "displayName": "url",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "canBeUsedToMatch": true,
+              "type": "string"
+            },
+            {
+              "id": "firecrawl_api",
+              "displayName": "firecrawl_api",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "canBeUsedToMatch": true,
+              "type": "string",
+              "removed": true
+            }
+          ],
+          "attemptToConvertTypes": false,
+          "convertFieldsToString": false
+        }
+      },
+      "type": "@n8n/n8n-nodes-langchain.toolWorkflow",
+      "typeVersion": 2.2,
+      "position": [
+        1296,
+        272
+      ],
+      "id": "a080475c-71e8-4014-a653-c71dca8612d5",
+      "name": "ranked_keywords"
+    },
+    {
+      "parameters": {
+        "description": "Call this tool for related keywords.",
+        "workflowId": {
+          "__rl": true,
+          "value": "edWM6uMdKMV69iXQ",
+          "mode": "list",
+          "cachedResultName": "Laboratory — Keywordo-kun (Tools)"
+        },
+        "workflowInputs": {
+          "mappingMode": "defineBelow",
+          "value": {
+            "function": "=related_keywords",
+            "keyword": "={{ /*n8n-auto-generated-fromAI-override*/ $fromAI('keyword', ``, 'string') }}",
+            "country_code": "={{ $json.dataforseo_location_code }}",
+            "language_code": "={{ $json.dataforseo_language_code }}"
+          },
+          "matchingColumns": [],
+          "schema": [
+            {
+              "id": "function",
+              "displayName": "function",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "canBeUsedToMatch": true,
+              "type": "string"
+            },
+            {
+              "id": "keyword",
+              "displayName": "keyword",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "canBeUsedToMatch": true,
+              "type": "string"
+            },
+            {
+              "id": "country_code",
+              "displayName": "country_code",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "canBeUsedToMatch": true,
+              "type": "string"
+            },
+            {
+              "id": "language_code",
+              "displayName": "language_code",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "canBeUsedToMatch": true,
+              "type": "string"
+            },
+            {
+              "id": "url",
+              "displayName": "url",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "canBeUsedToMatch": true,
+              "type": "string",
+              "removed": true
+            },
+            {
+              "id": "firecrawl_api",
+              "displayName": "firecrawl_api",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "canBeUsedToMatch": true,
+              "type": "string",
+              "removed": true
+            }
+          ],
+          "attemptToConvertTypes": false,
+          "convertFieldsToString": false
+        }
+      },
+      "type": "@n8n/n8n-nodes-langchain.toolWorkflow",
+      "typeVersion": 2.2,
+      "position": [
+        912,
+        272
+      ],
+      "id": "49e0652a-5c43-4e69-9b5c-ccbe294c042a",
+      "name": "related_keywords"
+    },
+    {
+      "parameters": {
+        "description": "Call this tool for keyword ideas.",
+        "workflowId": {
+          "__rl": true,
+          "value": "edWM6uMdKMV69iXQ",
+          "mode": "list",
+          "cachedResultName": "Laboratory — Keywordo-kun (Tools)"
+        },
+        "workflowInputs": {
+          "mappingMode": "defineBelow",
+          "value": {
+            "function": "=keyword_ideas",
+            "keyword": "={{ /*n8n-auto-generated-fromAI-override*/ $fromAI('keyword', ``, 'string') }}",
+            "country_code": "={{ $json.dataforseo_location_code }}",
+            "language_code": "={{ $json.dataforseo_language_code }}"
+          },
+          "matchingColumns": [],
+          "schema": [
+            {
+              "id": "function",
+              "displayName": "function",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "canBeUsedToMatch": true,
+              "type": "string"
+            },
+            {
+              "id": "keyword",
+              "displayName": "keyword",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "canBeUsedToMatch": true,
+              "type": "string"
+            },
+            {
+              "id": "country_code",
+              "displayName": "country_code",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "canBeUsedToMatch": true,
+              "type": "string"
+            },
+            {
+              "id": "language_code",
+              "displayName": "language_code",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "canBeUsedToMatch": true,
+              "type": "string"
+            },
+            {
+              "id": "url",
+              "displayName": "url",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "canBeUsedToMatch": true,
+              "type": "string",
+              "removed": true
+            },
+            {
+              "id": "firecrawl_api",
+              "displayName": "firecrawl_api",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "canBeUsedToMatch": true,
+              "type": "string",
+              "removed": true
+            }
+          ],
+          "attemptToConvertTypes": false,
+          "convertFieldsToString": false
+        }
+      },
+      "type": "@n8n/n8n-nodes-langchain.toolWorkflow",
+      "typeVersion": 2.2,
+      "position": [
+        768,
+        272
+      ],
+      "id": "ae13f2f3-0771-4edb-b11a-2524ef4e1196",
+      "name": "keyword_ideas"
+    },
+    {
+      "parameters": {
+        "description": "Call this tool for Serp search.",
+        "workflowId": {
+          "__rl": true,
+          "value": "edWM6uMdKMV69iXQ",
+          "mode": "list",
+          "cachedResultName": "Laboratory — Keywordo-kun (Tools)"
+        },
+        "workflowInputs": {
+          "mappingMode": "defineBelow",
+          "value": {
+            "function": "serp_search",
+            "keyword": "={{ /*n8n-auto-generated-fromAI-override*/ $fromAI('keyword', ``, 'string') }}",
+            "country_code": "={{ $json.dataforseo_location_code }}",
+            "language_code": "={{ $json.dataforseo_language_code }}"
+          },
+          "matchingColumns": [],
+          "schema": [
+            {
+              "id": "function",
+              "displayName": "function",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "canBeUsedToMatch": true,
+              "type": "string"
+            },
+            {
+              "id": "keyword",
+              "displayName": "keyword",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "canBeUsedToMatch": true,
+              "type": "string"
+            },
+            {
+              "id": "country_code",
+              "displayName": "country_code",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "canBeUsedToMatch": true,
+              "type": "string"
+            },
+            {
+              "id": "language_code",
+              "displayName": "language_code",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "canBeUsedToMatch": true,
+              "type": "string"
+            },
+            {
+              "id": "url",
+              "displayName": "url",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "canBeUsedToMatch": true,
+              "type": "string",
+              "removed": true
+            },
+            {
+              "id": "firecrawl_api",
+              "displayName": "firecrawl_api",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "canBeUsedToMatch": true,
+              "type": "string",
+              "removed": true
+            }
+          ],
+          "attemptToConvertTypes": false,
+          "convertFieldsToString": false
+        }
+      },
+      "type": "@n8n/n8n-nodes-langchain.toolWorkflow",
+      "typeVersion": 2.2,
+      "position": [
+        1136,
+        272
+      ],
+      "id": "30ea3fac-e674-4788-91ad-ab7a26a6a828",
+      "name": "serp_search"
+    },
+    {
+      "parameters": {
+        "sessionIdType": "customKey",
+        "sessionKey": "={{ $json.cf_connecting_ip }}",
+        "contextWindowLength": 12
+      },
+      "type": "@n8n/n8n-nodes-langchain.memoryBufferWindow",
+      "typeVersion": 1.3,
+      "position": [
+        480,
+        272
+      ],
+      "id": "6b89fe61-1de5-42b2-adf5-fa0893ad5be8",
+      "name": "Memory"
+    },
+    {
+      "parameters": {
+        "method": "POST",
+        "url": "https://api.firecrawl.dev/v1/scrape",
+        "sendHeaders": true,
+        "headerParameters": {
+          "parameters": [
+            {
+              "name": "Authorization",
+              "value": "=Bearer {{ $json.firecrawl_api_key }}"
+            }
+          ]
+        },
+        "sendBody": true,
+        "specifyBody": "json",
+        "jsonBody": "={\n  \"url\": \"{{ $fromAI('url_search') }}\",\n  \"formats\": [\n    \"markdown\"\n  ],\n  \"onlyMainContent\": true,\n  \"parsePDF\": true,\n  \"maxAge\": 14400000\n}",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.httpRequestTool",
+      "typeVersion": 4.2,
+      "position": [
+        1616,
+        272
+      ],
+      "id": "f9821895-5d3b-47d6-bbd6-e2e0275c4fcb",
+      "name": "URL_search"
+    },
+    {
+      "parameters": {
+        "description": "Call AI Mode search.",
+        "workflowId": {
+          "__rl": true,
+          "value": "edWM6uMdKMV69iXQ",
+          "mode": "list",
+          "cachedResultName": "Laboratory — Keywordo-kun (Tools)"
+        },
+        "workflowInputs": {
+          "mappingMode": "defineBelow",
+          "value": {
+            "function": "=ai_mode",
+            "keyword": "={{ /*n8n-auto-generated-fromAI-override*/ $fromAI('keyword', ``, 'string') }}",
+            "country_code": "={{ $json.dataforseo_location_code }}",
+            "language_code": "={{ $json.dataforseo_language_code }}"
+          },
+          "matchingColumns": [],
+          "schema": [
+            {
+              "id": "function",
+              "displayName": "function",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "canBeUsedToMatch": true,
+              "type": "string"
+            },
+            {
+              "id": "keyword",
+              "displayName": "keyword",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "canBeUsedToMatch": true,
+              "type": "string"
+            },
+            {
+              "id": "country_code",
+              "displayName": "country_code",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "canBeUsedToMatch": true,
+              "type": "string"
+            },
+            {
+              "id": "language_code",
+              "displayName": "language_code",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "canBeUsedToMatch": true,
+              "type": "string"
+            },
+            {
+              "id": "url",
+              "displayName": "url",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "canBeUsedToMatch": true,
+              "type": "string",
+              "removed": true
+            },
+            {
+              "id": "firecrawl_api",
+              "displayName": "firecrawl_api",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "canBeUsedToMatch": true,
+              "type": "string",
+              "removed": true
+            }
+          ],
+          "attemptToConvertTypes": false,
+          "convertFieldsToString": false
+        }
+      },
+      "type": "@n8n/n8n-nodes-langchain.toolWorkflow",
+      "typeVersion": 2.2,
+      "position": [
+        1744,
+        272
+      ],
+      "id": "89e2afff-398d-4b72-a164-0fb9a0025489",
+      "name": "ai_mode"
+    },
+    {
+      "parameters": {
+        "description": "Call this tool to get the internal links",
+        "workflowId": {
+          "__rl": true,
+          "value": "edWM6uMdKMV69iXQ",
+          "mode": "list",
+          "cachedResultName": "Laboratory — Keywordo-kun (Tools)"
+        },
+        "workflowInputs": {
+          "mappingMode": "defineBelow",
+          "value": {
+            "function": "=internal_links",
+            "country_code": "={{ $json.dataforseo_location_code }}",
+            "language_code": "={{ $json.dataforseo_language_code }}",
+            "url": "={{ /*n8n-auto-generated-fromAI-override*/ $fromAI('url', ``, 'string') }}",
+            "firecrawl_api": "={{ $('🦺 Set Data').item.json.firecrawl_api_key }}"
+          },
+          "matchingColumns": [],
+          "schema": [
+            {
+              "id": "function",
+              "displayName": "function",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "canBeUsedToMatch": true,
+              "type": "string"
+            },
+            {
+              "id": "keyword",
+              "displayName": "keyword",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "canBeUsedToMatch": true,
+              "type": "string",
+              "removed": true
+            },
+            {
+              "id": "country_code",
+              "displayName": "country_code",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "canBeUsedToMatch": true,
+              "type": "string"
+            },
+            {
+              "id": "language_code",
+              "displayName": "language_code",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "canBeUsedToMatch": true,
+              "type": "string"
+            },
+            {
+              "id": "url",
+              "displayName": "url",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "canBeUsedToMatch": true,
+              "type": "string",
+              "removed": false
+            },
+            {
+              "id": "firecrawl_api",
+              "displayName": "firecrawl_api",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "canBeUsedToMatch": true,
+              "type": "string",
+              "removed": false
+            }
+          ],
+          "attemptToConvertTypes": false,
+          "convertFieldsToString": false
+        }
+      },
+      "type": "@n8n/n8n-nodes-langchain.toolWorkflow",
+      "typeVersion": 2.2,
+      "position": [
+        1488,
+        272
+      ],
+      "id": "96e0bf4a-830f-4a49-877f-ef94cf194c54",
+      "name": "internal_links"
+    },
+    {
+      "parameters": {
+        "httpMethod": "POST",
+        "path": "articollo",
+        "responseMode": "responseNode",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.webhook",
+      "typeVersion": 2.1,
+      "position": [
+        -16,
+        -64
+      ],
+      "id": "b490ce5e-dfe5-413f-a752-021ee163de74",
+      "name": "Webhook",
+      "webhookId": "a154e531-424f-4312-a16d-c239ba1584d8"
+    },
+    {
+      "parameters": {
+        "options": {}
+      },
+      "type": "n8n-nodes-base.respondToWebhook",
+      "typeVersion": 1.4,
+      "position": [
+        1632,
+        -64
+      ],
+      "id": "42ccb418-0710-4086-8b2f-1f4322b34c40",
+      "name": "Respond to Webhook"
+    },
+    {
+      "parameters": {
+        "content": "## Keyword Research 🔍",
+        "height": 236,
+        "width": 336,
+        "color": 3
+      },
+      "type": "n8n-nodes-base.stickyNote",
+      "typeVersion": 1,
+      "position": [
+        720,
+        192
+      ],
+      "id": "6c7e295d-3e56-4f78-9e87-02b6a0f97e08",
+      "name": "Sticky Note2"
+    },
+    {
+      "parameters": {
+        "content": "## Brain 🧠",
+        "height": 236,
+        "width": 472,
+        "color": 2
+      },
+      "type": "n8n-nodes-base.stickyNote",
+      "typeVersion": 1,
+      "position": [
+        224,
+        192
+      ],
+      "id": "fe4d3409-318b-4687-a6a4-0c779bb6bf6c",
+      "name": "Sticky Note6"
+    },
+    {
+      "parameters": {
+        "content": "![n8n Creator Profile](https://pub-a17d2fc7266e4743b378a51308926c96.r2.dev/keywordokungif.gif)",
+        "height": 464,
+        "width": 700
+      },
+      "type": "n8n-nodes-base.stickyNote",
+      "typeVersion": 1,
+      "position": [
+        816,
+        -288
+      ],
+      "id": "be4e012d-9d59-436b-b614-18ba39beb49d",
+      "name": "Sticky Note9"
+    },
+    {
+      "parameters": {
+        "content": "## 🔗 Webhook Trigger\n",
+        "height": 400,
+        "width": 552,
+        "color": 6
+      },
+      "type": "n8n-nodes-base.stickyNote",
+      "typeVersion": 1,
+      "position": [
+        -64,
+        -224
+      ],
+      "id": "1a414649-242b-47e8-9be4-cc10caf2be6a",
+      "name": "Sticky Note8"
+    },
+    {
+      "parameters": {
+        "content": "## Response ➡️\n\n",
+        "height": 400,
+        "width": 300,
+        "color": 6
+      },
+      "type": "n8n-nodes-base.stickyNote",
+      "typeVersion": 1,
+      "position": [
+        1536,
+        -224
+      ],
+      "id": "18de4877-a8dc-4c42-b508-ba18b70eceb3",
+      "name": "Sticky Note10"
+    },
+    {
+      "parameters": {
+        "content": "## 🎙️ Audio or Text 📝",
+        "height": 432,
+        "width": 276
+      },
+      "type": "n8n-nodes-base.stickyNote",
+      "typeVersion": 1,
+      "position": [
+        512,
+        -256
+      ],
+      "id": "24baa5fa-7292-4086-9807-42c6cee6c660",
+      "name": "Sticky Note11"
+    },
+    {
+      "parameters": {},
+      "type": "@n8n/n8n-nodes-langchain.toolThink",
+      "typeVersion": 1.1,
+      "position": [
+        592,
+        272
+      ],
+      "id": "37d0e6ae-13ef-4467-a997-eed41178f719",
+      "name": "Think"
+    },
+    {
+      "parameters": {
+        "content": "## Competitor Analysis 📊",
+        "height": 236,
+        "width": 368,
+        "color": 5
+      },
+      "type": "n8n-nodes-base.stickyNote",
+      "typeVersion": 1,
+      "position": [
+        1072,
+        192
+      ],
+      "id": "1ded0898-5977-4895-bc9b-8ea6a704df64",
+      "name": "Sticky Note13"
+    },
+    {
+      "parameters": {
+        "content": "## AI Mode & Data 🤖💻",
+        "height": 236,
+        "width": 400,
+        "color": 4
+      },
+      "type": "n8n-nodes-base.stickyNote",
+      "typeVersion": 1,
+      "position": [
+        1456,
+        192
+      ],
+      "id": "e47ee252-360a-444d-999b-2ec892acec60",
+      "name": "Sticky Note14"
+    },
+    {
+      "parameters": {
+        "resource": "audio",
+        "modelId": {
+          "__rl": true,
+          "value": "models/gemini-2.5-flash",
+          "mode": "list",
+          "cachedResultName": "models/gemini-2.5-flash"
+        },
+        "inputType": "binary",
+        "binaryPropertyName": "audio",
+        "options": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.googleGemini",
+      "typeVersion": 1,
+      "position": [
+        592,
+        -144
+      ],
+      "id": "cb4ca9a3-a9a6-4171-9cf2-abe55e01453a",
+      "name": "Transcribe Audio",
+      "credentials": {
+        "googlePalmApi": {
+          "id": "8eDMUtP7P20s67XX",
+          "name": "Google Gemini(PaLM) Api account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "fe7ecc99-e1e8-4a5e-bdd6-6fce9757b234",
+              "name": "Message",
+              "value": "={{ $('Webhook').item.json.body.message }}",
+              "type": "string"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "id": "0a390bb5-0a07-4f28-b774-a1758626f5af",
+      "name": "Set Message",
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.4,
+      "position": [
+        592,
+        16
+      ]
+    },
+    {
+      "parameters": {
+        "rules": {
+          "values": [
+            {
+              "conditions": {
+                "options": {
+                  "caseSensitive": true,
+                  "leftValue": "",
+                  "typeValidation": "strict",
+                  "version": 2
+                },
+                "conditions": [
+                  {
+                    "leftValue": "={{ $('Webhook').first().json.body.type }}",
+                    "rightValue": "voice",
+                    "operator": {
+                      "type": "string",
+                      "operation": "equals"
+                    },
+                    "id": "9cb161db-e250-49b2-a93a-9e0fe0a0a36a"
+                  }
+                ],
+                "combinator": "and"
+              },
+              "renameOutput": true,
+              "outputKey": "Voice"
+            },
+            {
+              "conditions": {
+                "options": {
+                  "caseSensitive": true,
+                  "leftValue": "",
+                  "typeValidation": "strict",
+                  "version": 2
+                },
+                "conditions": [
+                  {
+                    "id": "8c844924-b2ed-48b0-935c-c66a8fd0c778",
+                    "leftValue": "={{ $('Webhook').first().json.body.type }}",
+                    "rightValue": "text",
+                    "operator": {
+                      "type": "string",
+                      "operation": "equals"
+                    }
+                  }
+                ],
+                "combinator": "and"
+              },
+              "renameOutput": true,
+              "outputKey": "Text"
+            }
+          ]
+        },
+        "options": {
+          "allMatchingOutputs": false
+        }
+      },
+      "id": "9911be50-21e2-4b92-a8a3-77531db3a34f",
+      "name": "Switch",
+      "type": "n8n-nodes-base.switch",
+      "typeVersion": 3.2,
+      "position": [
+        336,
+        -64
+      ]
+    },
+    {
+      "parameters": {
+        "options": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.lmChatGoogleGemini",
+      "typeVersion": 1,
+      "position": [
+        256,
+        272
+      ],
+      "id": "336f7ede-6d46-428f-86ca-51016632ae05",
+      "name": "2.5 Flash",
+      "credentials": {
+        "googlePalmApi": {
+          "id": "8eDMUtP7P20s67XX",
+          "name": "Google Gemini(PaLM) Api account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "modelName": "models/gemini-2.5-pro",
+        "options": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.lmChatGoogleGemini",
+      "typeVersion": 1,
+      "position": [
+        368,
+        272
+      ],
+      "id": "b9d9f755-4704-4723-8f91-dcc7b8d51091",
+      "name": "2.5 Pro",
+      "credentials": {
+        "googlePalmApi": {
+          "id": "8eDMUtP7P20s67XX",
+          "name": "Google Gemini(PaLM) Api account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "content": "## 📋 Setup Guide\n### **Author:** [Agrici Daniel](https://www.youtube.com/@AgriciDaniel)\n---\n### ✅ First Steps\n1. **Import the following workflows** into your n8n environment:\n   * `Keywordo-kun`\n   * `Keywordo-kun (tools)`\n2. **Link the workflows** together.\n   * Ensure that the tool workflow is properly connected.\n---\n\n### 🔑 API Keys to Configure\n* [Gemini](https://aistudio.google.com/)\n* [DataforSEO](https://dataforseo.com/)\n* [Firecrawl](https://www.firecrawl.dev/)\n---\n\n### 📄 Download & Connect\n* [V0 Chat Template](https://drive.google.com/file/d/1Clq5w4RD_z9UeTGEKUYPI6csRgM9vTLD/view?usp=drive_link)\n  → Download the `.zip`, import it into **[v0.dev](https://v0.dev/)**, then connect the **Webhook Production URL** to your chat interface. Set the workflow to active to receive a response.\n---\n\n### ⚡ **Before running the full system:**\n* Make sure all **credentials, APIs, and templates** are properly set up.\n* ✅ Set the correct **DataForSEO language** and **country code** inside the **“🦺 Set Data”** node.\n",
+        "height": 656,
+        "width": 432,
+        "color": 7
+      },
+      "type": "n8n-nodes-base.stickyNote",
+      "typeVersion": 1,
+      "position": [
+        -528,
+        -224
+      ],
+      "id": "86866b4d-59f9-4419-a2a1-9e0183c4606a",
+      "name": "Sticky Note3"
+    },
+    {
+      "parameters": {
+        "content": "### DataforSEO Code Reference 📚",
+        "height": 240,
+        "width": 272,
+        "color": 7
+      },
+      "type": "n8n-nodes-base.stickyNote",
+      "typeVersion": 1,
+      "position": [
+        -64,
+        192
+      ],
+      "id": "1df83830-1928-4076-907d-6ff5e395286f",
+      "name": "Sticky Note"
+    },
+    {
+      "parameters": {
+        "url": "https://api.dataforseo.com/v3/dataforseo_labs/locations_and_languages",
+        "authentication": "genericCredentialType",
+        "genericAuthType": "httpBasicAuth",
+        "options": {
+          "redirect": {
+            "redirect": {
+              "followRedirects": false
+            }
+          }
+        }
+      },
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [
+        16,
+        256
+      ],
+      "id": "bf95913f-41e1-43f6-a2cd-368e01622028",
+      "name": "Language/Country Code",
+      "credentials": {
+        "httpBasicAuth": {
+          "id": "n5o00CCWcmHFeI1p",
+          "name": "DataForSEO"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "jsCode": "// --- Data Mappings ---\n// This object maps the country name from the form to the DataForSEO location_code.\nconst countryToLocationCode = {\n  \"Albania\": 2008, \"Algeria\": 2012, \"Angola\": 2024, \"Argentina\": 2032,\n  \"Armenia\": 2051, \"Australia\": 2036, \"Austria\": 2040, \"Azerbaijan\": 2031,\n  \"Bahrain\": 2048, \"Bangladesh\": 2050, \"Belgium\": 2056, \"Bolivia\": 2068,\n  \"Bosnia and Herzegovina\": 2070, \"Brazil\": 2076, \"Bulgaria\": 2100,\n  \"Burkina Faso\": 2854, \"Cambodia\": 2116, \"Cameroon\": 2120, \"Canada\": 2124,\n  \"Chile\": 2152, \"Colombia\": 2170, \"Costa Rica\": 2188, \"Cote d'Ivoire\": 2384,\n  \"Croatia\": 2191, \"Cyprus\": 2196, \"Czechia\": 2203, \"Denmark\": 2208,\n  \"Ecuador\": 2218, \"Egypt\": 2818, \"El Salvador\": 2222, \"Estonia\": 2233,\n  \"Finland\": 2246, \"France\": 2250, \"Germany\": 2276, \"Ghana\": 2288,\n  \"Greece\": 2300, \"Guatemala\": 2320, \"Hong Kong\": 2344, \"Hungary\": 2348,\n  \"India\": 2356, \"Indonesia\": 2360, \"Ireland\": 2372, \"Israel\": 2376,\n  \"Italy\": 2380, \"Japan\": 2392, \"Jordan\": 2400, \"Kazakhstan\": 2398,\n  \"Kenya\": 2404, \"Latvia\": 2428, \"Lithuania\": 2440, \"Malaysia\": 2458,\n  \"Malta\": 2470, \"Mexico\": 2484, \"Moldova\": 2498, \"Monaco\": 2492,\n  \"Morocco\": 2504, \"Myanmar (Burma)\": 2104, \"Netherlands\": 2528,\n  \"New Zealand\": 2554, \"Nicaragua\": 2558, \"Nigeria\": 2566,\n  \"North Macedonia\": 2807, \"Norway\": 2578, \"Pakistan\": 2586, \"Panama\": 2591,\n  \"Paraguay\": 2600, \"Peru\": 2604, \"Philippines\": 2608, \"Poland\": 2616,\n  \"Portugal\": 2620, \"Romania\": 2642, \"Saudi Arabia\": 2682, \"Senegal\": 2686,\n  \"Serbia\": 2688, \"Singapore\": 2702, \"Slovakia\": 2703, \"Slovenia\": 2705,\n  \"South Africa\": 2710, \"South Korea\": 2410, \"Spain\": 2724, \"Sri Lanka\": 2144,\n  \"Sweden\": 2752, \"Switzerland\": 2756, \"Taiwan\": 2158, \"Thailand\": 2764,\n  \"Tunisia\": 2788, \"Turkiye\": 2792, \"Ukraine\": 2804,\n  \"United Arab Emirates\": 2784, \"United Kingdom\": 2826, \"United States\": 2840,\n  \"Uruguay\": 2858, \"Venezuela\": 2862, \"Vietnam\": 2704\n};\n\n// This object maps the language name from the form to the DataForSEO language_code.\nconst languageToLanguageCode = {\n  \"Albanian\": \"sq\", \"Arabic\": \"ar\", \"Armenian\": \"hy\", \"Azeri\": \"az\",\n  \"Bengali\": \"bn\", \"Bosnian\": \"bs\", \"Bulgarian\": \"bg\",\n  \"Chinese (Simplified)\": \"zh-CN\", \"Chinese (Traditional)\": \"zh-TW\",\n  \"Croatian\": \"hr\", \"Czech\": \"cs\", \"Danish\": \"da\", \"Dutch\": \"nl\",\n  \"English\": \"en\", \"Estonian\": \"et\", \"Finnish\": \"fi\", \"French\": \"fr\",\n  \"German\": \"de\", \"Greek\": \"el\", \"Hebrew\": \"he\", \"Hindi\": \"hi\",\n  \"Hungarian\": \"hu\", \"Indonesian\": \"id\", \"Italian\": \"it\", \"Japanese\": \"ja\",\n  \"Korean\": \"ko\", \"Latvian\": \"lv\", \"Lithuanian\": \"lt\", \"Macedonian\": \"mk\",\n  \"Malay\": \"ms\", \"Norwegian (Bokmål)\": \"nb\", \"Polish\": \"pl\",\n  \"Portuguese\": \"pt\", \"Romanian\": \"ro\", \"Russian\": \"ru\", \"Serbian\": \"sr\",\n  \"Slovak\": \"sk\", \"Slovenian\": \"sl\", \"Spanish\": \"es\", \"Swedish\": \"sv\",\n  \"Tagalog\": \"tl\", \"Thai\": \"th\", \"Turkish\": \"tr\", \"Ukrainian\": \"uk\",\n  \"Urdu\": \"ur\", \"Vietnamese\": \"vi\"\n};\n\n// --- Main Logic ---\nfor (const item of items) {\n  // Get the data from item.json.body - this is where the actual data is stored\n  const dataPayload = item.json.body;\n  \n  // Check if the payload and the required properties exist\n  if (dataPayload && dataPayload.country && dataPayload.language) {\n    const countryName = dataPayload.country;\n    const languageName = dataPayload.language;\n    \n    // Find the corresponding codes from the mapping objects\n    const locationCode = countryToLocationCode[countryName] ?? null;\n    const languageCode = languageToLanguageCode[languageName] ?? null;\n    \n    // Create a clean JSON output with only the codes\n    item.json = {\n      location_code: locationCode,\n      language_code: languageCode\n    };\n  } else {\n    // If data is not found in the expected structure, output an error\n    item.json = {\n      location_code: null,\n      language_code: null,\n      error: \"Could not find 'country' or 'language' inside item.json.body\"\n    };\n  }\n}\n\nreturn items;"
+      },
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        160,
+        -64
+      ],
+      "id": "8fb95d85-2241-490a-b648-810880712c55",
+      "name": "Code"
+    },
+    {
+      "parameters": {
+        "promptType": "define",
+        "text": "={{ $json.Message }}",
+        "needsFallback": true,
+        "options": {
+          "systemMessage": "=# Key - SEO/GEO Expert System Prompt\n\n## Identity & Core Behavior\nYou are **Keyo**, an elite SEO/GEO strategist who transforms businesses through AI-powered search domination. You combine deep technical expertise with conversational simplicity, explaining complex concepts like you're talking to a smart 9th grader.\n\n**Personality Matrix:**\n- **Confident Expert:** Never hedge or apologize - you know your stuff\n- **Data-Driven:** Every recommendation backed by numbers\n- **Action-Oriented:** Focus on what users can DO right now\n- **Domination Mindset:** Use powerful language - \"dominate,\" \"crush,\" \"outrank,\" \"win\"\n\n---\n\n## 🎯 Fundamental Operating Principles\n\n### Response Architecture\nEvery response follows this structure:\n1. **Power Hook** (1 sentence): Start with \"🎯\", \"🚀\", or \"💡\" + exciting insight\n2. **Delivery** (Core content): Data, insights, strategies\n3. **Bridge** (1 sentence): Connect to next action with confidence\n4. **Suggestions** (Always 3): Clear next steps\n\n### Opening Hook Requirements\n**MANDATORY:** Every response starts with one of these patterns:\n- Research: \"🎯 The data reveals [exciting finding about topic]!\"\n- Content: \"🚀 Let's dominate [topic] with this [strategy/content]!\"\n- Analysis: \"💡 I've uncovered [number] opportunities to crush your competition!\"\n- Follow-up: \"Perfect choice! Here's how we [achieve goal]...\"\n\n### The 3-Table Rule\n**Research responses MUST include 3+ tables:**\n1. **Primary Data Table** (keywords, competitors, metrics)\n2. **Opportunities/Gaps Table** (untapped potential)\n3. **Strategic Recommendations Table** (actionable insights)\n\nMissing tables = incomplete response. No exceptions.\n\n### E-E-A-T Integration\nWeave authority naturally into every response:\n- **Experience:** \"Based on analyzing 500+ successful campaigns...\"\n- **Expertise:** \"The data shows a clear pattern...\"\n- **Authority:** \"Industry leaders consistently use...\"\n- **Trust:** \"Verified through multiple data sources...\"\n\n### Power Language Requirements\nUse these phrases to maintain domination mindset:\n- \"dominate the search landscape\"\n- \"crush the competition\"\n- \"your competitive advantage\"\n- \"let's outrank everyone\"\n- \"the data reveals massive opportunity\"\n- \"win the SERP battle\"\n- \"search domination strategy\"\n\n---\n\n## 📊 Core Knowledge Framework\n\n### Modern SEO Landscape (2025)\n```markdown\nPRIMARY TARGETS:\n├── AI Overviews (Position 0)\n│   ├── Featured snippets evolution\n│   ├── Direct answers\n│   └── Multi-source synthesis\n├── AI Chat Mode\n│   ├── Conversational queries\n│   ├── Follow-up questions\n│   └── Context retention\n└── Traditional SERPs\n    ├── Still 65% of traffic\n    ├── Local pack dominance\n    └── Video carousels growing\n```\n\n### GEO (Generative Engine Optimization)\n**The New Frontier:** Optimizing for AI-generated responses\n- **Citation Optimization:** Become the source AI models reference\n- **Semantic Depth:** Cover topics comprehensively\n- **Structured Data 2.0:** JSON-LD + Schema.org + AI-readable formats\n- **Answer Engine Ready:** Direct, concise, authoritative answers\n\n### Content Success Formula\n```\nPerfect Content = (User Intent × E-E-A-T) + (Semantic Completeness × Technical Excellence)\n```\n\n### Keyword Strategy Evolution\n| Strategy Level | Focus | Competition | ROI Timeline |\n|---------------|-------|-------------|--------------|\n| **Foundational** | Brand + navigational | None | Immediate |\n| **Competitive** | High-volume commercial | High | 6-12 months |\n| **Opportunistic** | Long-tail + questions | Low | 2-3 months |\n| **Innovative** | Emerging terms + AI queries | None | 3-6 months |\n\n---\n\n## 🔄 Workflow Execution Protocols\n\n### Universal Response Flow\n```markdown\n1. POWER HOOK: Start with emoji + exciting insight\n2. EXECUTE: Run all necessary tools (silent in n8n)\n3. ANALYZE: Process data for domination strategy\n4. DELIVER: Present complete findings with 3+ tables\n5. BRIDGE: Connect to next action confidently\n6. SUGGEST: Always end with 3 suggestions\n```\n\n### Workflow Decision Tree\n```\nUser Input\n    ├── Clear Article Request → Full Creation Workflow\n    ├── Research Request → Targeted Analysis Workflow\n    ├── Vague/Unclear → Clarification Framework\n    └── Follow-up → Continuation Protocol\n```\n\n---\n\n## 📝 Content Creation Workflow\n\n### Phase 1: Strategic Research (MANDATORY 3+ TABLES)\n**Delivery Format:**\n```markdown\n🎯 The data reveals massive opportunity in [topic]! Here's your domination strategy:\n\n**Search Landscape Overview:**\n[Table 1: Volume, Competition, SERP Features, AI Overview Presence]\n\n**Competitive Intelligence:**\n[Table 2: Top 5 Competitors - URL, DR, Word Count, E-E-A-T Signals]\n\n**Content Gap Opportunities:**\n[Table 3: Missing Topics, Search Volume, Competition Level, Priority]\n\n**Your Domination Strategy:**\n- Primary Target: [Keyword] (Why it wins)\n- Content Type: [Format] (Competitive advantage)\n- Differentiation: [Unique angle to crush competition]\n- E-E-A-T Hook: [Specific expertise to leverage]\n\nReady to outrank everyone with this strategy?\n\n[SUGGESTION] Perfect! Create content with this winning approach\n[SUGGESTION] Adjust strategy to dominate [specific aspect]\n[SUGGESTION] Deep-dive into competitor weaknesses first\n```\n\n### Phase 2: Title Engineering\n```markdown\n🚀 Let's craft a title that dominates the SERPs!\n\n**Power Title Options for Maximum Impact:**\n\n**Option A: [Keyword] + [Emotional Trigger]**\n\"[Full Title]\"\n- CTR Potential: [X]%\n- Keyword Alignment: [Score]/10\n- Competitive Edge: [Unique element]\n\n**Option B: [Question Format]**\n\"[Full Title]\"\n- CTR Potential: [X]%\n- Voice Search: Optimized\n- User Intent: [Match level]\n\n**Option C: [Number + Benefit]**\n\"[Full Title]\"\n- CTR Potential: [X]%\n- Scannability: High\n- Promise: [Clear value]\n\nWhich title will help us dominate?\n\nOption A - strongest keyword match\nOption B - best for featured snippets\nOption C - highest CTR potential\n```\n\n### Phase 3: Introduction Mastery\n```markdown\n💡 Here's an introduction that hooks readers and establishes authority:\n\n> [Write compelling intro using A-P-P formula]\n> \n> Acknowledge: [Problem statement]\n> Promise: [Solution offered]\n> Preview: [What they'll learn]\n\nThis introduction scores 9/10 for engagement and positions you as the authority.\n\nPerfect! Move to outline\nStrengthen the promise statement\nAdd more urgency to the problem\n```\n\n### Phase 4: Structural Blueprint\n```markdown\n🚀 Here's the content architecture to dominate [title]:\n\n**Content Blueprint for Search Domination:**\n\n[Present complete H1-H2-H3 structure with:\n- Word count targets per section\n- Internal linking opportunities\n- E-E-A-T integration points\n- Schema markup suggestions]\n\nThis structure will crush the competition!\n\nApprove structure and write content\nAdd section about [topic]\nReorganize for better flow\n```\n\n### Phase 5: Content Delivery\n```markdown\n🎯 Here's your complete, optimized article ready to dominate:\n\n[Deliver complete article with:\n- All sections fully written\n- Bold key terms\n- Data tables where relevant\n- FAQ section\n- Meta description\n- Internal linking suggestions (after asking for domain)]\n\n**Content Domination Score:**\n- Readability: [Flesch score]\n- Keyword Density: [X]%\n- E-E-A-T Signals: [Count]\n- Estimated Read Time: [X] minutes\n\nYour content is primed to outrank the competition!\n\nPublish and dominate the SERPs!\nEnhance [specific section] for more authority\nCreate supporting content cluster\n```\n\n---\n\n## 🔍 Research Workflows\n\n### Keyword Research Delivery (MANDATORY 3 TABLES)\n```markdown\n🎯 The data reveals a goldmine of opportunities in [topic]!\n\n**High-Impact Opportunities:**\n[Table 1: Top 20 keywords with volume, KD, intent, trend]\n\n**Hidden Gems (Low Competition):**\n[Table 2: 10 keywords under 30 KD with volume 1000+]\n\n**Question Keywords (Voice/AI Ready):**\n[Table 3: Top questions with volume and current ranking sites]\n\n**Your Domination Strategy:**\nTarget \"[specific keyword]\" first to crush competition because [data-driven reason].\n\n[SUGGESTION] Create content for top keyword\n[SUGGESTION] Analyze competitors for these terms\n[SUGGESTION] Find related semantic keywords\n```\n\n### Competitor Analysis Framework (MANDATORY 3 TABLES)\n```markdown\n💡 I've uncovered exactly how to outrank [competitor]!\n\n**Competitor Overview:**\n[Table 1: Domain, DR, Traffic, Top Pages, Content Frequency]\n\n**Their Winning Strategy:**\n[Table 2: Top Keywords, Content Types, Link Profile, E-E-A-T Signals]\n\n**Exploitable Weaknesses:**\n[Table 3: Content Gaps, Technical Issues, Weak E-E-A-T Areas]\n\n**Your Attack Plan to Dominate:**\n1. Quick Win: [Specific action]\n2. Medium Term: [Strategic move]\n3. Long Game: [Authority building]\n\nReady to crush their rankings?\n\n[SUGGESTION] Execute quick win strategy\n[SUGGESTION] Create better content than their top page\n[SUGGESTION] Build topical authority in their weak area\n```\n\n---\n\n## 💬 Communication Excellence\n\n### Tone Calibration\n- **Research Delivery:** Exciting discovery + data confidence\n- **Content Creation:** Collaborative domination\n- **Problem Solving:** Solutions that win\n- **Success Moments:** Celebration + next conquest\n\n### Power Phrases (USE FREQUENTLY)\n- \"The data reveals...\" (not \"I think\")\n- \"Here's exactly how to dominate...\" (not \"You might try\")\n- \"Your competitive advantage is...\" (not \"A possible strength\")\n- \"Let's crush the competition...\" (not \"Let's try\")\n- \"Ready to outrank everyone?\" (not \"Does this help?\")\n\n### Forbidden Phrases (NEVER USE)\n- \"I'll search for...\" (just present results)\n- \"Let me...\" (just do it)\n- \"I hope this helps\" (it WILL help)\n- \"Sorry\" (unless genuine error)\n- \"Maybe\" or \"Perhaps\" (be definitive)\n- Any hedging language that shows uncertainty\n\n---\n\n## 📐 Markdown Format Standards (MANDATORY)\n\n### Always Use Markdown for Professional Output\nEvery response MUST use proper markdown formatting for clarity and visual hierarchy.\n\n### Required Markdown Elements:\n\n#### Headers\n```markdown\n## Major Sections (sparingly)\n### Subsections (primary organizational tool)\n#### Details when needed\n```\n\n#### Tables (MANDATORY for data)\n```markdown\n| Column 1 | Column 2 | Column 3 |\n|----------|----------|----------|\n| Data     | Data     | Data     |\n```\n- Always use tables for comparative data\n- Minimum 3 columns for context\n- Include units (K, %, $)\n- Headers must be descriptive\n\n#### Lists\n```markdown\n**Ordered lists for steps:**\n1. First step\n2. Second step\n3. Third step\n\n**Unordered lists for options:**\n- Option one\n- Option two\n- Option three\n```\n\n#### Emphasis\n```markdown\n**Bold** for key terms and important points\n*Italics* for subtle emphasis or examples\n`backticks` for keywords, metrics, or technical terms\n> Blockquotes ONLY for drafted content (articles, intros)\n```\n\n#### Code Blocks for Technical Content\n```markdown\n```json\n{\n  \"schema\": \"example\",\n  \"type\": \"SEO\"\n}\n```\n```\n\n#### Separators\n```markdown\n--- \nUse for major section breaks\n```\n\n### Visual Hierarchy Rules\n1. **Never use H1 (#)** - Reserved for article titles only\n2. **Use H2 (##) sparingly** - Only for major sections\n3. **Prefer H3 (###)** - Main organizational tool\n4. **Bold important numbers**: **67%** increase, **$2.3M** revenue\n5. **Highlight keywords**: Target `long-tail keywords` for better ROI\n\n### Data Presentation Standards\n- **Numbers**: Always bold significant metrics: **45K** searches/month\n- **Percentages**: Include % symbol: **73%** CTR improvement\n- **Money**: Use proper formatting: **$1,250** CPC\n- **Scores**: Show as fractions: **8/10** optimization score\n\n### Response Structure Example:\n```markdown\n### 🎯 Keyword Research Results\n\nHere's what the data reveals about **[topic]**:\n\n**High-Value Opportunities:**\n| Keyword | Volume | KD | CPC |\n|---------|--------|----|----|\n| `main keyword` | **45K** | 32% | $2.50 |\n\n**Key Insights:**\n- **Finding 1:** Details with `specific keywords`\n- **Finding 2:** Metrics showing **23%** opportunity\n- **Finding 3:** Competition gap worth **$45K** monthly\n\n---\n\nReady to dominate these keywords?\n\n[SUGGESTION] Target `main keyword` for quick wins\n[SUGGESTION] Create content cluster around topic\n[SUGGESTION] Analyze top competitor strategies\n```\n\n### Response Length Guidelines\n| Context | Word Count | Required Elements |\n|---------|------------|-------------------|\n| Initial research | 400-500 | 3+ tables + strategy |\n| Title options | 150-200 | 3 options + rationale |\n| Introduction | 100-150 | A-P-P formula |\n| Outline | 300-400 | Complete structure |\n| Full article | 1500-3000 | All sections + optimization |\n| Follow-up | 100-200 | Direct answer + suggestions |\n\n---\n\n## 🎯 Suggestion Format (MANDATORY)\n\nEvery response MUST end with exactly 3 suggestions in this EXACT format:\n```\n[SUGGESTION] [Action verb] [specific outcome]\n[SUGGESTION] [Alternative path] [clear benefit]\n[SUGGESTION] [Different angle] [value proposition]\n```\n\nExamples:\n```\n[SUGGESTION] Create content targeting \"AI SEO tools\" for quick wins\n[SUGGESTION] Analyze top competitor's strategy to find gaps\n[SUGGESTION] Research buyer-intent keywords for higher conversions\n```\n\n**CRITICAL:** The [SUGGESTION] tag is required for webhook integration. Missing tags = broken functionality.\n\n---\n\n## 🛠 Tool Integration & Execution\n\n### Available Tools (Execute Silently via n8n Webhook)\n\n#### Research Tools:\n- **`serp_search(query)`**: Analyzes SERP features, competition, and ranking factors\n  - Use for: Understanding search landscape, identifying SERP features\n  - Returns: Top results, featured snippets, PAA boxes, AI Overview presence\n\n- **`keyword_ideas(seed_keyword)`**: Discovers keyword opportunities\n  - Use for: Finding related keywords, long-tail variations\n  - Returns: Volume, CPC, competition, intent\n\n- **`related_keywords(primary_keyword)`**: Finds semantic variations\n  - Use for: Building topical clusters, LSI keywords\n  - Returns: Semantically related terms with metrics\n\n- **`ranked_keywords(domain)`**: Reveals competitor's ranking keywords\n  - Use for: Competitive analysis, gap identification\n  - Returns: Keywords competitor ranks for with positions\n\n- **`url_search(url)`**: Deep analysis of specific pages\n  - Use for: Content analysis, E-E-A-T signals, technical SEO\n  - Returns: Word count, headers, meta data, optimization score\n\n- **`AI_Mode(query)`**: Analyzes AI chat responses\n  - Use for: Understanding AI Overview optimization\n  - Returns: How AI responds to queries, cited sources\n\n- **`internal_links(domain)`**: Finds internal linking opportunities\n  - Use for: Content optimization, site structure\n  - Returns: Relevant pages for internal linking\n\n### Tool Execution Protocol\n\n#### CRITICAL WEBHOOK RULES:\n1. **Execute ALL tools BEFORE writing response** - Never announce intentions\n2. **Process silently** - Tools run in background via n8n\n3. **Present as insights** - \"The data reveals...\" not \"I searched and found...\"\n4. **Multiple tools per response** - Use 3-5 tools for comprehensive research\n\n#### Tool Usage by Workflow:\n\n**For Keyword Research:**\n```\n1. keyword_ideas(topic) → Get primary opportunities\n2. related_keywords(best_keyword) → Find semantic variations\n3. serp_search(top_keyword) → Analyze competition\n```\n\n**For Competitor Analysis:**\n```\n1. ranked_keywords(competitor_domain) → Their keywords\n2. url_search(their_top_page) → Content analysis\n3. serp_search(their_main_keyword) → SERP landscape\n```\n\n**For Content Creation:**\n```\n1. serp_search(target_keyword) → Understand competition\n2. AI_Mode(target_query) → AI Overview optimization\n3. keyword_ideas(topic) → Related keywords to include\n```\n\n### Data Presentation Rules\n- **Always synthesize** data from multiple tools\n- **Never show raw** tool outputs\n- **Create insights** by combining tool results\n- **Add strategic interpretation** to all data\n\n---\n\n## ⚡ Quick Start Templates\n\n### First Contact\n\"🚀 Ready to dominate search! What topic should we conquer today? Share your niche and I'll deliver a complete competitive analysis with actionable strategies to outrank everyone.\"\n\n### Unclear Request\n\"💡 I can help you dominate search in three powerful ways:\n\n**🎯 Option 1: Create Winning Content**\nI'll research and help craft SEO content that crushes competition\n\n**🔍 Option 2: Keyword Goldmine**\nDiscover untapped opportunities to dominate your niche\n\n**🔬 Option 3: Competitor Breakdown**\nDecode and outperform top-ranking sites\n\nWhich path to search domination excites you most?\n\n[SUGGESTION] Start with keyword research for quick wins\n[SUGGESTION] Analyze my top competitor's strategy\n[SUGGESTION] Create content immediately for [my topic]\"\n\n### After Research\n\"🎯 The data reveals massive opportunity! Here's your domination blueprint:\n\n[Present findings with 3+ tables]\n\nYour competitive advantage is [specific insight from data]. Ready to crush the competition?\n\n[SUGGESTION] Create content targeting [top opportunity]\n[SUGGESTION] Go deeper into [promising sub-niche]\n[SUGGESTION] Analyze [specific competitor] mentioned in data\"\n\n---\n\n## 🏆 Excellence Checklist\n\nBefore sending ANY response, verify:\n- [ ] **Opening hooks** with emoji + insight\n- [ ] **3+ tables** in ALL research responses\n- [ ] **Power language** used throughout\n- [ ] **E-E-A-T signals** woven naturally\n- [ ] **No hedging** or uncertain language\n- [ ] **3 suggestions** at the end\n- [ ] **Data-driven** recommendations\n- [ ] **Domination mindset** maintained\n- [ ] **Clear next action** provided\n- [ ] **Format perfect** with markdown\n\n---\n\n## 🔄 Version Control\n**v3.1** - Perfect Score Edition (Final)\n- Enforced 3-table minimum for research\n- Added mandatory power hooks\n- Strengthened domination language\n- Removed hedging phrases\n- Enhanced E-E-A-T integration\n- Optimized for n8n backend\n\n**Core Mission:** Transform every user into a search domination powerhouse through data-driven strategies, authoritative content, and relentless competitive advantage!\n\n---\n\nCurrent Date & Time for reference: {{ $now }}"
+        }
+      },
+      "type": "@n8n/n8n-nodes-langchain.agent",
+      "typeVersion": 2.2,
+      "position": [
+        1136,
+        0
+      ],
+      "id": "ef1cefe8-6882-41af-a0da-999614bee7aa",
+      "name": "Keywordo",
+      "retryOnFail": true,
+      "maxTries": 3
+    },
+    {
+      "parameters": {
+        "content": "![n8n Creator Profile](https://pub-70c57f6d49284d1da8650039c2add836.r2.dev/Keywordlabs%20Accelerator%20Pro.png)",
+        "height": 80,
+        "width": 188
+      },
+      "type": "n8n-nodes-base.stickyNote",
+      "typeVersion": 1,
+      "position": [
+        1328,
+        -288
+      ],
+      "id": "15717f72-588c-4c61-b0ec-d15b2e694c01",
+      "name": "Sticky Note12"
+    }
+  ],
+  "pinData": {
+    "Language/Country Code": [
+      {
+        "json": {
+          "version": "0.1.20250828",
+          "status_code": 20000,
+          "status_message": "Ok.",
+          "time": "0.3207 sec.",
+          "cost": 0,
+          "tasks_count": 1,
+          "tasks_error": 0,
+          "tasks": [
+            {
+              "id": "08302359-9680-0196-0000-80f4d3603897",
+              "status_code": 20000,
+              "status_message": "Ok.",
+              "time": "0 sec.",
+              "cost": 0,
+              "result_count": 94,
+              "path": [
+                "v3",
+                "dataforseo_labs",
+                "locations_and_languages"
+              ],
+              "data": {
+                "api": "dataforseo_labs",
+                "function": "locations_and_languages"
+              },
+              "result": [
+                {
+                  "location_code": 2008,
+                  "location_name": "Albania",
+                  "location_code_parent": null,
+                  "country_iso_code": "AL",
+                  "location_type": "Country",
+                  "available_languages": [
+                    {
+                      "available_sources": [
+                        "google"
+                      ],
+                      "language_name": "Albanian",
+                      "language_code": "sq",
+                      "keywords": 1281452,
+                      "serps": 287116
+                    }
+                  ]
+                },
+                {
+                  "location_code": 2012,
+                  "location_name": "Algeria",
+                  "location_code_parent": null,
+                  "country_iso_code": "DZ",
+                  "location_type": "Country",
+                  "available_languages": [
+                    {
+                      "available_sources": [
+                        "google"
+                      ],
+                      "language_name": "French",
+                      "language_code": "fr",
+                      "keywords": 29211893,
+                      "serps": 1268563
+                    },
+                    {
+                      "available_sources": [
+                        "google"
+                      ],
+                      "language_name": "Arabic",
+                      "language_code": "ar",
+                      "keywords": 14523778,
+                      "serps": 1283678
+                    }
+                  ]
+                },
+                {
+                  "location_code": 2024,
+                  "location_name": "Angola",
+                  "location_code_parent": null,
+                  "country_iso_code": "AO",
+                  "location_type": "Country",
+                  "available_languages": [
+                    {
+                      "available_sources": [
+                        "google"
+                      ],
+                      "language_name": "Portuguese",
+                      "language_code": "pt",
+                      "keywords": 17420269,
+                      "serps": 1305950
+                    }
+                  ]
+                },
+                {
+                  "location_code": 2031,
+                  "location_name": "Azerbaijan",
+                  "location_code_parent": null,
+                  "country_iso_code": "AZ",
+                  "location_type": "Country",
+                  "available_languages": [
+                    {
+                      "available_sources": [
+                        "google"
+                      ],
+                      "language_name": "Azeri",
+                      "language_code": "az",
+                      "keywords": 16046694,
+                      "serps": 408205
+                    }
+                  ]
+                },
+                {
+                  "location_code": 2032,
+                  "location_name": "Argentina",
+                  "location_code_parent": null,
+                  "country_iso_code": "AR",
+                  "location_type": "Country",
+                  "available_languages": [
+                    {
+                      "available_sources": [
+                        "google"
+                      ],
+                      "language_name": "Spanish",
+                      "language_code": "es",
+                      "keywords": 63903414,
+                      "serps": 4088813
+                    }
+                  ]
+                },
+                {
+                  "location_code": 2036,
+                  "location_name": "Australia",
+                  "location_code_parent": null,
+                  "country_iso_code": "AU",
+                  "location_type": "Country",
+                  "available_languages": [
+                    {
+                      "available_sources": [
+                        "google"
+                      ],
+                      "language_name": "English",
+                      "language_code": "en",
+                      "keywords": 275925131,
+                      "serps": 16713255
+                    }
+                  ]
+                },
+                {
+                  "location_code": 2040,
+                  "location_name": "Austria",
+                  "location_code_parent": null,
+                  "country_iso_code": "AT",
+                  "location_type": "Country",
+                  "available_languages": [
+                    {
+                      "available_sources": [
+                        "google"
+                      ],
+                      "language_name": "German",
+                      "language_code": "de",
+                      "keywords": 61567150,
+                      "serps": 2893819
+                    }
+                  ]
+                },
+                {
+                  "location_code": 2048,
+                  "location_name": "Bahrain",
+                  "location_code_parent": null,
+                  "country_iso_code": "BH",
+                  "location_type": "Country",
+                  "available_languages": [
+                    {
+                      "available_sources": [
+                        "google"
+                      ],
+                      "language_name": "Arabic",
+                      "language_code": "ar",
+                      "keywords": 13430122,
+                      "serps": 490240
+                    }
+                  ]
+                },
+                {
+                  "location_code": 2050,
+                  "location_name": "Bangladesh",
+                  "location_code_parent": null,
+                  "country_iso_code": "BD",
+                  "location_type": "Country",
+                  "available_languages": [
+                    {
+                      "available_sources": [
+                        "google"
+                      ],
+                      "language_name": "Bengali",
+                      "language_code": "bn",
+                      "keywords": 33313685,
+                      "serps": 1647646
+                    }
+                  ]
+                },
+                {
+                  "location_code": 2051,
+                  "location_name": "Armenia",
+                  "location_code_parent": null,
+                  "country_iso_code": "AM",
+                  "location_type": "Country",
+                  "available_languages": [
+                    {
+                      "available_sources": [
+                        "google"
+                      ],
+                      "language_name": "Armenian",
+                      "language_code": "hy",
+                      "keywords": 3855934,
+                      "serps": 196765
+                    }
+                  ]
+                },
+                {
+                  "location_code": 2056,
+                  "location_name": "Belgium",
+                  "location_code_parent": null,
+                  "country_iso_code": "BE",
+                  "location_type": "Country",
+                  "available_languages": [
+                    {
+                      "available_sources": [
+                        "google"
+                      ],
+                      "language_name": "French",
+                      "language_code": "fr",
+                      "keywords": 30031228,
+                      "serps": 250868
+                    },
+                    {
+                      "available_sources": [
+                        "google"
+                      ],
+                      "language_name": "Dutch",
+                      "language_code": "nl",
+                      "keywords": 70019241,
+                      "serps": 3224203
+                    },
+                    {
+                      "available_sources": [
+                        "google"
+                      ],
+                      "language_name": "German",
+                      "language_code": "de",
+                      "keywords": 21505206,
+                      "serps": 637881
+                    }
+                  ]
+                },
+                {
+                  "location_code": 2068,
+                  "location_name": "Bolivia",
+                  "location_code_parent": null,
+                  "country_iso_code": "BO",
+                  "location_type": "Country",
+                  "available_languages": [
+                    {
+                      "available_sources": [
+                        "google"
+                      ],
+                      "language_name": "Spanish",
+                      "language_code": "es",
+                      "keywords": 9089189,
+                      "serps": 302351
+                    }
+                  ]
+                },
+                {
+                  "location_code": 2070,
+                  "location_name": "Bosnia and Herzegovina",
+                  "location_code_parent": null,
+                  "country_iso_code": "BA",
+                  "location_type": "Country",
+                  "available_languages": [
+                    {
+                      "available_sources": [
+                        "google"
+                      ],
+                      "language_name": "Bosnian",
+                      "language_code": "bs",
+                      "keywords": 2434954,
+                      "serps": 324492
+                    }
+                  ]
+                },
+                {
+                  "location_code": 2076,
+                  "location_name": "Brazil",
+                  "location_code_parent": null,
+                  "country_iso_code": "BR",
+                  "location_type": "Country",
+                  "available_languages": [
+                    {
+                      "available_sources": [
+                        "google"
+                      ],
+                      "language_name": "Portuguese",
+                      "language_code": "pt",
+                      "keywords": 172896784,
+                      "serps": 13332266
+                    }
+                  ]
+                },
+                {
+                  "location_code": 2100,
+                  "location_name": "Bulgaria",
+                  "location_code_parent": null,
+                  "country_iso_code": "BG",
+                  "location_type": "Country",
+                  "available_languages": [
+                    {
+                      "available_sources": [
+                        "google"
+                      ],
+                      "language_name": "Bulgarian",
+                      "language_code": "bg",
+                      "keywords": 8463885,
+                      "serps": 480353
+                    }
+                  ]
+                },
+                {
+                  "location_code": 2104,
+                  "location_name": "Myanmar (Burma)",
+                  "location_code_parent": null,
+                  "country_iso_code": "MM",
+                  "location_type": "Country",
+                  "available_languages": [
+                    {
+                      "available_sources": [
+                        "google"
+                      ],
+                      "language_name": "English",
+                      "language_code": "en",
+                      "keywords": 15845615,
+                      "serps": 618238
+                    }
+                  ]
+                },
+                {
+                  "location_code": 2116,
+                  "location_name": "Cambodia",
+                  "location_code_parent": null,
+                  "country_iso_code": "KH",
+                  "location_type": "Country",
+                  "available_languages": [
+                    {
+                      "available_sources": [
+                        "google"
+                      ],
+                      "language_name": "English",
+                      "language_code": "en",
+                      "keywords": 16183705,
+                      "serps": 606530
+                    }
+                  ]
+                },
+                {
+                  "location_code": 2120,
+                  "location_name": "Cameroon",
+                  "location_code_parent": null,
+                  "country_iso_code": "CM",
+                  "location_type": "Country",
+                  "available_languages": [
+                    {
+                      "available_sources": [
+                        "google"
+                      ],
+                      "language_name": "French",
+                      "language_code": "fr",
+                      "keywords": 7537101,
+                      "serps": 405815
+                    }
+                  ]
+                },
+                {
+                  "location_code": 2124,
+                  "location_name": "Canada",
+                  "location_code_parent": null,
+                  "country_iso_code": "CA",
+                  "location_type": "Country",
+                  "available_languages": [
+                    {
+                      "available_sources": [
+                        "google"
+                      ],
+                      "language_name": "English",
+                      "language_code": "en",
+                      "keywords": 308997567,
+                      "serps": 17857680
+                    },
+                    {
+                      "available_sources": [
+                        "google"
+                      ],
+                      "language_name": "French",
+                      "language_code": "fr",
+                      "keywords": 169670872,
+                      "serps": 8102617
+                    }
+                  ]
+                },
+                {
+                  "location_code": 2144,
+                  "location_name": "Sri Lanka",
+                  "location_code_parent": null,
+                  "country_iso_code": "LK",
+                  "location_type": "Country",
+                  "available_languages": [
+                    {
+                      "available_sources": [
+                        "google"
+                      ],
+                      "language_name": "English",
+                      "language_code": "en",
+                      "keywords": 18009328,
+                      "serps": 755607
+                    }
+                  ]
+                },
+                {
+                  "location_code": 2152,
+                  "location_name": "Chile",
+                  "location_code_parent": null,
+                  "country_iso_code": "CL",
+                  "location_type": "Country",
+                  "available_languages": [
+                    {
+                      "available_sources": [
+                        "google"
+                      ],
+                      "language_name": "Spanish",
+                      "language_code": "es",
+                      "keywords": 46675889,
+                      "serps": 1755759
+                    }
+                  ]
+                },
+                {
+                  "location_code": 2158,
+                  "location_name": "Taiwan",
+                  "location_code_parent": null,
+                  "country_iso_code": "TW",
+                  "location_type": "Region",
+                  "available_languages": [
+                    {
+                      "available_sources": [
+                        "google"
+                      ],
+                      "language_name": "Chinese (Traditional)",
+                      "language_code": "zh-TW",
+                      "keywords": 56344587,
+                      "serps": 4301265
+                    }
+                  ]
+                },
+                {
+                  "location_code": 2170,
+                  "location_name": "Colombia",
+                  "location_code_parent": null,
+                  "country_iso_code": "CO",
+                  "location_type": "Country",
+                  "available_languages": [
+                    {
+                      "available_sources": [
+                        "google"
+                      ],
+                      "language_name": "Spanish",
+                      "language_code": "es",
+                      "keywords": 56921568,
+                      "serps": 2128315
+                    }
+                  ]
+                },
+                {
+                  "location_code": 2188,
+                  "location_name": "Costa Rica",
+                  "location_code_parent": null,
+                  "country_iso_code": "CR",
+                  "location_type": "Country",
+                  "available_languages": [
+                    {
+                      "available_sources": [
+                        "google"
+                      ],
+                      "language_name": "Spanish",
+                      "language_code": "es",
+                      "keywords": 14680643,
+                      "serps": 493308
+                    }
+                  ]
+                },
+                {
+                  "location_code": 2191,
+                  "location_name": "Croatia",
+                  "location_code_parent": null,
+                  "country_iso_code": "HR",
+                  "location_type": "Country",
+                  "available_languages": [
+                    {
+                      "available_sources": [
+                        "google"
+                      ],
+                      "language_name": "Croatian",
+                      "language_code": "hr",
+                      "keywords": 8043724,
+                      "serps": 386849
+                    }
+                  ]
+                },
+                {
+                  "location_code": 2196,
+                  "location_name": "Cyprus",
+                  "location_code_parent": null,
+                  "country_iso_code": "CY",
+                  "location_type": "Country",
+                  "available_languages": [
+                    {
+                      "available_sources": [
+                        "google"
+                      ],
+                      "language_name": "Greek",
+                      "language_code": "el",
+                      "keywords": 19417776,
+                      "serps": 283195
+                    },
+                    {
+                      "available_sources": [
+                        "google"
+                      ],
+                      "language_name": "English",
+                      "language_code": "en",
+                      "keywords": 15832842,
+                      "serps": 282220
+                    }
+                  ]
+                },
+                {
+                  "location_code": 2203,
+                  "location_name": "Czechia",
+                  "location_code_parent": null,
+                  "country_iso_code": "CZ",
+                  "location_type": "Country",
+                  "available_languages": [
+                    {
+                      "available_sources": [
+                        "google"
+                      ],
+                      "language_name": "Czech",
+                      "language_code": "cs",
+                      "keywords": 22583897,
+                      "serps": 2221104
+                    }
+                  ]
+                },
+                {
+                  "location_code": 2208,
+                  "location_name": "Denmark",
+                  "location_code_parent": null,
+                  "country_iso_code": "DK",
+                  "location_type": "Country",
+                  "available_languages": [
+                    {
+                      "available_sources": [
+                        "google"
+                      ],
+                      "language_name": "Danish",
+                      "language_code": "da",
+                      "keywords": 32337688,
+                      "serps": 2350578
+                    }
+                  ]
+                },
+                {
+                  "location_code": 2218,
+                  "location_name": "Ecuador",
+                  "location_code_parent": null,
+                  "country_iso_code": "EC",
+                  "location_type": "Country",
+                  "available_languages": [
+                    {
+                      "available_sources": [
+                        "google"
+                      ],
+                      "language_name": "Spanish",
+                      "language_code": "es",
+                      "keywords": 21305888,
+                      "serps": 772795
+                    }
+                  ]
+                },
+                {
+                  "location_code": 2222,
+                  "location_name": "El Salvador",
+                  "location_code_parent": null,
+                  "country_iso_code": "SV",
+                  "location_type": "Country",
+                  "available_languages": [
+                    {
+                      "available_sources": [
+                        "google"
+                      ],
+                      "language_name": "Spanish",
+                      "language_code": "es",
+                      "keywords": 8014745,
+                      "serps": 200464
+                    }
+                  ]
+                },
+                {
+                  "location_code": 2233,
+                  "location_name": "Estonia",
+                  "location_code_parent": null,
+                  "country_iso_code": "EE",
+                  "location_type": "Country",
+                  "available_languages": [
+                    {
+                      "available_sources": [
+                        "google"
+                      ],
+                      "language_name": "Estonian",
+                      "language_code": "et",
+                      "keywords": 4193585,
+                      "serps": 192627
+                    }
+                  ]
+                },
+                {
+                  "location_code": 2246,
+                  "location_name": "Finland",
+                  "location_code_parent": null,
+                  "country_iso_code": "FI",
+                  "location_type": "Country",
+                  "available_languages": [
+                    {
+                      "available_sources": [
+                        "google"
+                      ],
+                      "language_name": "Finnish",
+                      "language_code": "fi",
+                      "keywords": 25504854,
+                      "serps": 1735366
+                    }
+                  ]
+                },
+                {
+                  "location_code": 2250,
+                  "location_name": "France",
+                  "location_code_parent": null,
+                  "country_iso_code": "FR",
+                  "location_type": "Country",
+                  "available_languages": [
+                    {
+                      "available_sources": [
+                        "google"
+                      ],
+                      "language_name": "French",
+                      "language_code": "fr",
+                      "keywords": 222801603,
+                      "serps": 18552151
+                    }
+                  ]
+                },
+                {
+                  "location_code": 2276,
+                  "location_name": "Germany",
+                  "location_code_parent": null,
+                  "country_iso_code": "DE",
+                  "location_type": "Country",
+                  "available_languages": [
+                    {
+                      "available_sources": [
+                        "google"
+                      ],
+                      "language_name": "German",
+                      "language_code": "de",
+                      "keywords": 268736962,
+                      "serps": 25534276
+                    }
+                  ]
+                },
+                {
+                  "location_code": 2288,
+                  "location_name": "Ghana",
+                  "location_code_parent": null,
+                  "country_iso_code": "GH",
+                  "location_type": "Country",
+                  "available_languages": [
+                    {
+                      "available_sources": [
+                        "google"
+                      ],
+                      "language_name": "English",
+                      "language_code": "en",
+                      "keywords": 12652695,
+                      "serps": 764090
+                    }
+                  ]
+                },
+                {
+                  "location_code": 2300,
+                  "location_name": "Greece",
+                  "location_code_parent": null,
+                  "country_iso_code": "GR",
+                  "location_type": "Country",
+                  "available_languages": [
+                    {
+                      "available_sources": [
+                        "google"
+                      ],
+                      "language_name": "Greek",
+                      "language_code": "el",
+                      "keywords": 22991859,
+                      "serps": 1535418
+                    },
+                    {
+                      "available_sources": [
+                        "google"
+                      ],
+                      "language_name": "English",
+                      "language_code": "en",
+                      "keywords": 10279446,
+                      "serps": 653088
+                    }
+                  ]
+                },
+                {
+                  "location_code": 2320,
+                  "location_name": "Guatemala",
+                  "location_code_parent": null,
+                  "country_iso_code": "GT",
+                  "location_type": "Country",
+                  "available_languages": [
+                    {
+                      "available_sources": [
+                        "google"
+                      ],
+                      "language_name": "Spanish",
+                      "language_code": "es",
+                      "keywords": 14580823,
+                      "serps": 572543
+                    }
+                  ]
+                },
+                {
+                  "location_code": 2344,
+                  "location_name": "Hong Kong",
+                  "location_code_parent": null,
+                  "country_iso_code": "HK",
+                  "location_type": "Region",
+                  "available_languages": [
+                    {
+                      "available_sources": [
+                        "google"
+                      ],
+                      "language_name": "English",
+                      "language_code": "en",
+                      "keywords": 31621419,
+                      "serps": 1295589
+                    },
+                    {
+                      "available_sources": [
+                        "google"
+                      ],
+                      "language_name": "Chinese (Traditional)",
+                      "language_code": "zh-TW",
+                      "keywords": 63985354,
+                      "serps": 2986159
+                    }
+                  ]
+                },
+                {
+                  "location_code": 2348,
+                  "location_name": "Hungary",
+                  "location_code_parent": null,
+                  "country_iso_code": "HU",
+                  "location_type": "Country",
+                  "available_languages": [
+                    {
+                      "available_sources": [
+                        "google"
+                      ],
+                      "language_name": "Hungarian",
+                      "language_code": "hu",
+                      "keywords": 16299098,
+                      "serps": 1013392
+                    }
+                  ]
+                },
+                {
+                  "location_code": 2356,
+                  "location_name": "India",
+                  "location_code_parent": null,
+                  "country_iso_code": "IN",
+                  "location_type": "Country",
+                  "available_languages": [
+                    {
+                      "available_sources": [
+                        "google"
+                      ],
+                      "language_name": "English",
+                      "language_code": "en",
+                      "keywords": 285856593,
+                      "serps": 15804444
+                    },
+                    {
+                      "available_sources": [
+                        "google"
+                      ],
+                      "language_name": "Hindi",
+                      "language_code": "hi",
+                      "keywords": 130551052,
+                      "serps": 12109925
+                    }
+                  ]
+                },
+                {
+                  "location_code": 2360,
+                  "location_name": "Indonesia",
+                  "location_code_parent": null,
+                  "country_iso_code": "ID",
+                  "location_type": "Country",
+                  "available_languages": [
+                    {
+                      "available_sources": [
+                        "google"
+                      ],
+                      "language_name": "English",
+                      "language_code": "en",
+                      "keywords": 64220226,
+                      "serps": 3955504
+                    },
+                    {
+                      "available_sources": [
+                        "google"
+                      ],
+                      "language_name": "Indonesian",
+                      "language_code": "id",
+                      "keywords": 103314103,
+                      "serps": 6634261
+                    }
+                  ]
+                },
+                {
+                  "location_code": 2372,
+                  "location_name": "Ireland",
+                  "location_code_parent": null,
+                  "country_iso_code": "IE",
+                  "location_type": "Country",
+                  "available_languages": [
+                    {
+                      "available_sources": [
+                        "google"
+                      ],
+                      "language_name": "English",
+                      "language_code": "en",
+                      "keywords": 61757078,
+                      "serps": 2230052
+                    }
+                  ]
+                },
+                {
+                  "location_code": 2376,
+                  "location_name": "Israel",
+                  "location_code_parent": null,
+                  "country_iso_code": "IL",
+                  "location_type": "Country",
+                  "available_languages": [
+                    {
+                      "available_sources": [
+                        "google"
+                      ],
+                      "language_name": "Hebrew",
+                      "language_code": "he",
+                      "keywords": 29054604,
+                      "serps": 1799640
+                    },
+                    {
+                      "available_sources": [
+                        "google"
+                      ],
+                      "language_name": "Arabic",
+                      "language_code": "ar",
+                      "keywords": 17085124,
+                      "serps": 584986
+                    }
+                  ]
+                },
+                {
+                  "location_code": 2380,
+                  "location_name": "Italy",
+                  "location_code_parent": null,
+                  "country_iso_code": "IT",
+                  "location_type": "Country",
+                  "available_languages": [
+                    {
+                      "available_sources": [
+                        "google"
+                      ],
+                      "language_name": "Italian",
+                      "language_code": "it",
+                      "keywords": 140300566,
+                      "serps": 10839468
+                    }
+                  ]
+                },
+                {
+                  "location_code": 2384,
+                  "location_name": "Cote d'Ivoire",
+                  "location_code_parent": null,
+                  "country_iso_code": "CI",
+                  "location_type": "Country",
+                  "available_languages": [
+                    {
+                      "available_sources": [
+                        "google"
+                      ],
+                      "language_name": "French",
+                      "language_code": "fr",
+                      "keywords": 9615429,
+                      "serps": 600348
+                    }
+                  ]
+                },
+                {
+                  "location_code": 2392,
+                  "location_name": "Japan",
+                  "location_code_parent": null,
+                  "country_iso_code": "JP",
+                  "location_type": "Country",
+                  "available_languages": [
+                    {
+                      "available_sources": [
+                        "google"
+                      ],
+                      "language_name": "Japanese",
+                      "language_code": "ja",
+                      "keywords": 278269322,
+                      "serps": 17994825
+                    }
+                  ]
+                },
+                {
+                  "location_code": 2398,
+                  "location_name": "Kazakhstan",
+                  "location_code_parent": null,
+                  "country_iso_code": "KZ",
+                  "location_type": "Country",
+                  "available_languages": [
+                    {
+                      "available_sources": [
+                        "google"
+                      ],
+                      "language_name": "Russian",
+                      "language_code": "ru",
+                      "keywords": 17558952,
+                      "serps": 817899
+                    }
+                  ]
+                },
+                {
+                  "location_code": 2400,
+                  "location_name": "Jordan",
+                  "location_code_parent": null,
+                  "country_iso_code": "JO",
+                  "location_type": "Country",
+                  "available_languages": [
+                    {
+                      "available_sources": [
+                        "google"
+                      ],
+                      "language_name": "Arabic",
+                      "language_code": "ar",
+                      "keywords": 9326207,
+                      "serps": 407094
+                    }
+                  ]
+                },
+                {
+                  "location_code": 2404,
+                  "location_name": "Kenya",
+                  "location_code_parent": null,
+                  "country_iso_code": "KE",
+                  "location_type": "Country",
+                  "available_languages": [
+                    {
+                      "available_sources": [
+                        "google"
+                      ],
+                      "language_name": "English",
+                      "language_code": "en",
+                      "keywords": 25836833,
+                      "serps": 1259520
+                    }
+                  ]
+                },
+                {
+                  "location_code": 2410,
+                  "location_name": "South Korea",
+                  "location_code_parent": null,
+                  "country_iso_code": "KR",
+                  "location_type": "Country",
+                  "available_languages": [
+                    {
+                      "available_sources": [
+                        "google"
+                      ],
+                      "language_name": "Korean",
+                      "language_code": "ko",
+                      "keywords": 62263625,
+                      "serps": 7792364
+                    }
+                  ]
+                },
+                {
+                  "location_code": 2428,
+                  "location_name": "Latvia",
+                  "location_code_parent": null,
+                  "country_iso_code": "LV",
+                  "location_type": "Country",
+                  "available_languages": [
+                    {
+                      "available_sources": [
+                        "google"
+                      ],
+                      "language_name": "Latvian",
+                      "language_code": "lv",
+                      "keywords": 10542067,
+                      "serps": 387374
+                    }
+                  ]
+                },
+                {
+                  "location_code": 2440,
+                  "location_name": "Lithuania",
+                  "location_code_parent": null,
+                  "country_iso_code": "LT",
+                  "location_type": "Country",
+                  "available_languages": [
+                    {
+                      "available_sources": [
+                        "google"
+                      ],
+                      "language_name": "Lithuanian",
+                      "language_code": "lt",
+                      "keywords": 7612715,
+                      "serps": 586902
+                    }
+                  ]
+                },
+                {
+                  "location_code": 2458,
+                  "location_name": "Malaysia",
+                  "location_code_parent": null,
+                  "country_iso_code": "MY",
+                  "location_type": "Country",
+                  "available_languages": [
+                    {
+                      "available_sources": [
+                        "google"
+                      ],
+                      "language_name": "English",
+                      "language_code": "en",
+                      "keywords": 48470024,
+                      "serps": 1832701
+                    },
+                    {
+                      "available_sources": [
+                        "google"
+                      ],
+                      "language_name": "Malay",
+                      "language_code": "ms",
+                      "keywords": 43106785,
+                      "serps": 2391246
+                    }
+                  ]
+                },
+                {
+                  "location_code": 2470,
+                  "location_name": "Malta",
+                  "location_code_parent": null,
+                  "country_iso_code": "MT",
+                  "location_type": "Country",
+                  "available_languages": [
+                    {
+                      "available_sources": [
+                        "google"
+                      ],
+                      "language_name": "English",
+                      "language_code": "en",
+                      "keywords": 3959920,
+                      "serps": 93272
+                    }
+                  ]
+                },
+                {
+                  "location_code": 2484,
+                  "location_name": "Mexico",
+                  "location_code_parent": null,
+                  "country_iso_code": "MX",
+                  "location_type": "Country",
+                  "available_languages": [
+                    {
+                      "available_sources": [
+                        "google"
+                      ],
+                      "language_name": "Spanish",
+                      "language_code": "es",
+                      "keywords": 109191837,
+                      "serps": 6714786
+                    }
+                  ]
+                },
+                {
+                  "location_code": 2492,
+                  "location_name": "Monaco",
+                  "location_code_parent": null,
+                  "country_iso_code": "MC",
+                  "location_type": "Country",
+                  "available_languages": [
+                    {
+                      "available_sources": [
+                        "google"
+                      ],
+                      "language_name": "French",
+                      "language_code": "fr",
+                      "keywords": 742403,
+                      "serps": 159947
+                    }
+                  ]
+                },
+                {
+                  "location_code": 2498,
+                  "location_name": "Moldova",
+                  "location_code_parent": null,
+                  "country_iso_code": "MD",
+                  "location_type": "Country",
+                  "available_languages": [
+                    {
+                      "available_sources": [
+                        "google"
+                      ],
+                      "language_name": "Romanian",
+                      "language_code": "ro",
+                      "keywords": 2186546,
+                      "serps": 226038
+                    }
+                  ]
+                },
+                {
+                  "location_code": 2504,
+                  "location_name": "Morocco",
+                  "location_code_parent": null,
+                  "country_iso_code": "MA",
+                  "location_type": "Country",
+                  "available_languages": [
+                    {
+                      "available_sources": [
+                        "google"
+                      ],
+                      "language_name": "Arabic",
+                      "language_code": "ar",
+                      "keywords": 15301271,
+                      "serps": 1081846
+                    },
+                    {
+                      "available_sources": [
+                        "google"
+                      ],
+                      "language_name": "French",
+                      "language_code": "fr",
+                      "keywords": 8976659,
+                      "serps": 596293
+                    }
+                  ]
+                },
+                {
+                  "location_code": 2528,
+                  "location_name": "Netherlands",
+                  "location_code_parent": null,
+                  "country_iso_code": "NL",
+                  "location_type": "Country",
+                  "available_languages": [
+                    {
+                      "available_sources": [
+                        "google"
+                      ],
+                      "language_name": "Dutch",
+                      "language_code": "nl",
+                      "keywords": 107388771,
+                      "serps": 7116859
+                    }
+                  ]
+                },
+                {
+                  "location_code": 2554,
+                  "location_name": "New Zealand",
+                  "location_code_parent": null,
+                  "country_iso_code": "NZ",
+                  "location_type": "Country",
+                  "available_languages": [
+                    {
+                      "available_sources": [
+                        "google"
+                      ],
+                      "language_name": "English",
+                      "language_code": "en",
+                      "keywords": 38505977,
+                      "serps": 1410377
+                    }
+                  ]
+                },
+                {
+                  "location_code": 2558,
+                  "location_name": "Nicaragua",
+                  "location_code_parent": null,
+                  "country_iso_code": "NI",
+                  "location_type": "Country",
+                  "available_languages": [
+                    {
+                      "available_sources": [
+                        "google"
+                      ],
+                      "language_name": "Spanish",
+                      "language_code": "es",
+                      "keywords": 4344507,
+                      "serps": 101645
+                    }
+                  ]
+                },
+                {
+                  "location_code": 2566,
+                  "location_name": "Nigeria",
+                  "location_code_parent": null,
+                  "country_iso_code": "NG",
+                  "location_type": "Country",
+                  "available_languages": [
+                    {
+                      "available_sources": [
+                        "google"
+                      ],
+                      "language_name": "English",
+                      "language_code": "en",
+                      "keywords": 23516080,
+                      "serps": 1216873
+                    }
+                  ]
+                },
+                {
+                  "location_code": 2578,
+                  "location_name": "Norway",
+                  "location_code_parent": null,
+                  "country_iso_code": "NO",
+                  "location_type": "Country",
+                  "available_languages": [
+                    {
+                      "available_sources": [
+                        "google"
+                      ],
+                      "language_name": "Norwegian (Bokmål)",
+                      "language_code": "nb",
+                      "keywords": 33977908,
+                      "serps": 2874938
+                    }
+                  ]
+                },
+                {
+                  "location_code": 2586,
+                  "location_name": "Pakistan",
+                  "location_code_parent": null,
+                  "country_iso_code": "PK",
+                  "location_type": "Country",
+                  "available_languages": [
+                    {
+                      "available_sources": [
+                        "google"
+                      ],
+                      "language_name": "English",
+                      "language_code": "en",
+                      "keywords": 48235050,
+                      "serps": 1156810
+                    },
+                    {
+                      "available_sources": [
+                        "google"
+                      ],
+                      "language_name": "Urdu",
+                      "language_code": "ur",
+                      "keywords": 20788045,
+                      "serps": 274099
+                    }
+                  ]
+                },
+                {
+                  "location_code": 2591,
+                  "location_name": "Panama",
+                  "location_code_parent": null,
+                  "country_iso_code": "PA",
+                  "location_type": "Country",
+                  "available_languages": [
+                    {
+                      "available_sources": [
+                        "google"
+                      ],
+                      "language_name": "Spanish",
+                      "language_code": "es",
+                      "keywords": 9741659,
+                      "serps": 608702
+                    }
+                  ]
+                },
+                {
+                  "location_code": 2600,
+                  "location_name": "Paraguay",
+                  "location_code_parent": null,
+                  "country_iso_code": "PY",
+                  "location_type": "Country",
+                  "available_languages": [
+                    {
+                      "available_sources": [
+                        "google"
+                      ],
+                      "language_name": "Spanish",
+                      "language_code": "es",
+                      "keywords": 7591482,
+                      "serps": 297557
+                    }
+                  ]
+                },
+                {
+                  "location_code": 2604,
+                  "location_name": "Peru",
+                  "location_code_parent": null,
+                  "country_iso_code": "PE",
+                  "location_type": "Country",
+                  "available_languages": [
+                    {
+                      "available_sources": [
+                        "google"
+                      ],
+                      "language_name": "Spanish",
+                      "language_code": "es",
+                      "keywords": 40960601,
+                      "serps": 1484782
+                    }
+                  ]
+                },
+                {
+                  "location_code": 2608,
+                  "location_name": "Philippines",
+                  "location_code_parent": null,
+                  "country_iso_code": "PH",
+                  "location_type": "Country",
+                  "available_languages": [
+                    {
+                      "available_sources": [
+                        "google"
+                      ],
+                      "language_name": "English",
+                      "language_code": "en",
+                      "keywords": 46968003,
+                      "serps": 1750445
+                    },
+                    {
+                      "available_sources": [
+                        "google"
+                      ],
+                      "language_name": "Tagalog",
+                      "language_code": "tl",
+                      "keywords": 40482251,
+                      "serps": 1786355
+                    }
+                  ]
+                },
+                {
+                  "location_code": 2616,
+                  "location_name": "Poland",
+                  "location_code_parent": null,
+                  "country_iso_code": "PL",
+                  "location_type": "Country",
+                  "available_languages": [
+                    {
+                      "available_sources": [
+                        "google"
+                      ],
+                      "language_name": "Polish",
+                      "language_code": "pl",
+                      "keywords": 51018178,
+                      "serps": 3374261
+                    }
+                  ]
+                },
+                {
+                  "location_code": 2620,
+                  "location_name": "Portugal",
+                  "location_code_parent": null,
+                  "country_iso_code": "PT",
+                  "location_type": "Country",
+                  "available_languages": [
+                    {
+                      "available_sources": [
+                        "google"
+                      ],
+                      "language_name": "Portuguese",
+                      "language_code": "pt",
+                      "keywords": 35447417,
+                      "serps": 1528565
+                    }
+                  ]
+                },
+                {
+                  "location_code": 2642,
+                  "location_name": "Romania",
+                  "location_code_parent": null,
+                  "country_iso_code": "RO",
+                  "location_type": "Country",
+                  "available_languages": [
+                    {
+                      "available_sources": [
+                        "google"
+                      ],
+                      "language_name": "Romanian",
+                      "language_code": "ro",
+                      "keywords": 21885351,
+                      "serps": 1494485
+                    }
+                  ]
+                },
+                {
+                  "location_code": 2682,
+                  "location_name": "Saudi Arabia",
+                  "location_code_parent": null,
+                  "country_iso_code": "SA",
+                  "location_type": "Country",
+                  "available_languages": [
+                    {
+                      "available_sources": [
+                        "google",
+                        "amazon"
+                      ],
+                      "language_name": "Arabic",
+                      "language_code": "ar",
+                      "keywords": 48455682,
+                      "serps": 4424032
+                    }
+                  ]
+                },
+                {
+                  "location_code": 2686,
+                  "location_name": "Senegal",
+                  "location_code_parent": null,
+                  "country_iso_code": "SN",
+                  "location_type": "Country",
+                  "available_languages": [
+                    {
+                      "available_sources": [
+                        "google"
+                      ],
+                      "language_name": "French",
+                      "language_code": "fr",
+                      "keywords": 5658066,
+                      "serps": 302673
+                    }
+                  ]
+                },
+                {
+                  "location_code": 2688,
+                  "location_name": "Serbia",
+                  "location_code_parent": null,
+                  "country_iso_code": "RS",
+                  "location_type": "Country",
+                  "available_languages": [
+                    {
+                      "available_sources": [
+                        "google"
+                      ],
+                      "language_name": "Serbian",
+                      "language_code": "sr",
+                      "keywords": 6452117,
+                      "serps": 295658
+                    }
+                  ]
+                },
+                {
+                  "location_code": 2702,
+                  "location_name": "Singapore",
+                  "location_code_parent": null,
+                  "country_iso_code": "SG",
+                  "location_type": "Country",
+                  "available_languages": [
+                    {
+                      "available_sources": [
+                        "google"
+                      ],
+                      "language_name": "English",
+                      "language_code": "en",
+                      "keywords": 69665969,
+                      "serps": 2266102
+                    },
+                    {
+                      "available_sources": [
+                        "google"
+                      ],
+                      "language_name": "Chinese (Simplified)",
+                      "language_code": "zh-CN",
+                      "keywords": 30301422,
+                      "serps": 608640
+                    }
+                  ]
+                },
+                {
+                  "location_code": 2703,
+                  "location_name": "Slovakia",
+                  "location_code_parent": null,
+                  "country_iso_code": "SK",
+                  "location_type": "Country",
+                  "available_languages": [
+                    {
+                      "available_sources": [
+                        "google"
+                      ],
+                      "language_name": "Slovak",
+                      "language_code": "sk",
+                      "keywords": 11198963,
+                      "serps": 745947
+                    }
+                  ]
+                },
+                {
+                  "location_code": 2704,
+                  "location_name": "Vietnam",
+                  "location_code_parent": null,
+                  "country_iso_code": "VN",
+                  "location_type": "Country",
+                  "available_languages": [
+                    {
+                      "available_sources": [
+                        "google"
+                      ],
+                      "language_name": "English",
+                      "language_code": "en",
+                      "keywords": 17922160,
+                      "serps": 600324
+                    },
+                    {
+                      "available_sources": [
+                        "google"
+                      ],
+                      "language_name": "Vietnamese",
+                      "language_code": "vi",
+                      "keywords": 37323276,
+                      "serps": 1547770
+                    }
+                  ]
+                },
+                {
+                  "location_code": 2705,
+                  "location_name": "Slovenia",
+                  "location_code_parent": null,
+                  "country_iso_code": "SI",
+                  "location_type": "Country",
+                  "available_languages": [
+                    {
+                      "available_sources": [
+                        "google"
+                      ],
+                      "language_name": "Slovenian",
+                      "language_code": "sl",
+                      "keywords": 6809406,
+                      "serps": 395470
+                    }
+                  ]
+                },
+                {
+                  "location_code": 2710,
+                  "location_name": "South Africa",
+                  "location_code_parent": null,
+                  "country_iso_code": "ZA",
+                  "location_type": "Country",
+                  "available_languages": [
+                    {
+                      "available_sources": [
+                        "google"
+                      ],
+                      "language_name": "English",
+                      "language_code": "en",
+                      "keywords": 58203143,
+                      "serps": 2208528
+                    }
+                  ]
+                },
+                {
+                  "location_code": 2724,
+                  "location_name": "Spain",
+                  "location_code_parent": null,
+                  "country_iso_code": "ES",
+                  "location_type": "Country",
+                  "available_languages": [
+                    {
+                      "available_sources": [
+                        "google"
+                      ],
+                      "language_name": "Spanish",
+                      "language_code": "es",
+                      "keywords": 172194408,
+                      "serps": 8946744
+                    }
+                  ]
+                },
+                {
+                  "location_code": 2752,
+                  "location_name": "Sweden",
+                  "location_code_parent": null,
+                  "country_iso_code": "SE",
+                  "location_type": "Country",
+                  "available_languages": [
+                    {
+                      "available_sources": [
+                        "google"
+                      ],
+                      "language_name": "Swedish",
+                      "language_code": "sv",
+                      "keywords": 43578577,
+                      "serps": 3703850
+                    }
+                  ]
+                },
+                {
+                  "location_code": 2756,
+                  "location_name": "Switzerland",
+                  "location_code_parent": null,
+                  "country_iso_code": "CH",
+                  "location_type": "Country",
+                  "available_languages": [
+                    {
+                      "available_sources": [
+                        "google"
+                      ],
+                      "language_name": "German",
+                      "language_code": "de",
+                      "keywords": 82397154,
+                      "serps": 3291315
+                    },
+                    {
+                      "available_sources": [
+                        "google"
+                      ],
+                      "language_name": "French",
+                      "language_code": "fr",
+                      "keywords": 78587419,
+                      "serps": 1585144
+                    },
+                    {
+                      "available_sources": [
+                        "google"
+                      ],
+                      "language_name": "Italian",
+                      "language_code": "it",
+                      "keywords": 14438682,
+                      "serps": 659763
+                    }
+                  ]
+                },
+                {
+                  "location_code": 2764,
+                  "location_name": "Thailand",
+                  "location_code_parent": null,
+                  "country_iso_code": "TH",
+                  "location_type": "Country",
+                  "available_languages": [
+                    {
+                      "available_sources": [
+                        "google"
+                      ],
+                      "language_name": "Thai",
+                      "language_code": "th",
+                      "keywords": 45891164,
+                      "serps": 3015006
+                    }
+                  ]
+                },
+                {
+                  "location_code": 2784,
+                  "location_name": "United Arab Emirates",
+                  "location_code_parent": null,
+                  "country_iso_code": "AE",
+                  "location_type": "Country",
+                  "available_languages": [
+                    {
+                      "available_sources": [
+                        "google",
+                        "amazon"
+                      ],
+                      "language_name": "Arabic",
+                      "language_code": "ar",
+                      "keywords": 36896267,
+                      "serps": 1245263
+                    },
+                    {
+                      "available_sources": [
+                        "google"
+                      ],
+                      "language_name": "English",
+                      "language_code": "en",
+                      "keywords": 48446583,
+                      "serps": 1187237
+                    }
+                  ]
+                },
+                {
+                  "location_code": 2788,
+                  "location_name": "Tunisia",
+                  "location_code_parent": null,
+                  "country_iso_code": "TN",
+                  "location_type": "Country",
+                  "available_languages": [
+                    {
+                      "available_sources": [
+                        "google"
+                      ],
+                      "language_name": "Arabic",
+                      "language_code": "ar",
+                      "keywords": 10037898,
+                      "serps": 305761
+                    }
+                  ]
+                },
+                {
+                  "location_code": 2792,
+                  "location_name": "Turkiye",
+                  "location_code_parent": null,
+                  "country_iso_code": "TR",
+                  "location_type": "Country",
+                  "available_languages": [
+                    {
+                      "available_sources": [
+                        "google"
+                      ],
+                      "language_name": "Turkish",
+                      "language_code": "tr",
+                      "keywords": 53832290,
+                      "serps": 5441115
+                    }
+                  ]
+                },
+                {
+                  "location_code": 2804,
+                  "location_name": "Ukraine",
+                  "location_code_parent": null,
+                  "country_iso_code": "UA",
+                  "location_type": "Country",
+                  "available_languages": [
+                    {
+                      "available_sources": [
+                        "google"
+                      ],
+                      "language_name": "Ukrainian",
+                      "language_code": "uk",
+                      "keywords": 137990615,
+                      "serps": 11514403
+                    },
+                    {
+                      "available_sources": [
+                        "google"
+                      ],
+                      "language_name": "Russian",
+                      "language_code": "ru",
+                      "keywords": 115865897,
+                      "serps": 5407581
+                    }
+                  ]
+                },
+                {
+                  "location_code": 2807,
+                  "location_name": "North Macedonia",
+                  "location_code_parent": null,
+                  "country_iso_code": "MK",
+                  "location_type": "Country",
+                  "available_languages": [
+                    {
+                      "available_sources": [
+                        "google"
+                      ],
+                      "language_name": "Macedonian",
+                      "language_code": "mk",
+                      "keywords": 9816255,
+                      "serps": 202994
+                    }
+                  ]
+                },
+                {
+                  "location_code": 2818,
+                  "location_name": "Egypt",
+                  "location_code_parent": null,
+                  "country_iso_code": "EG",
+                  "location_type": "Country",
+                  "available_languages": [
+                    {
+                      "available_sources": [
+                        "google",
+                        "amazon"
+                      ],
+                      "language_name": "Arabic",
+                      "language_code": "ar",
+                      "keywords": 34818071,
+                      "serps": 2286818
+                    },
+                    {
+                      "available_sources": [
+                        "google"
+                      ],
+                      "language_name": "English",
+                      "language_code": "en",
+                      "keywords": 23241055,
+                      "serps": 1290494
+                    }
+                  ]
+                },
+                {
+                  "location_code": 2826,
+                  "location_name": "United Kingdom",
+                  "location_code_parent": null,
+                  "country_iso_code": "GB",
+                  "location_type": "Country",
+                  "available_languages": [
+                    {
+                      "available_sources": [
+                        "google"
+                      ],
+                      "language_name": "English",
+                      "language_code": "en",
+                      "keywords": 452077689,
+                      "serps": 35401481
+                    }
+                  ]
+                },
+                {
+                  "location_code": 2840,
+                  "location_name": "United States",
+                  "location_code_parent": null,
+                  "country_iso_code": "US",
+                  "location_type": "Country",
+                  "available_languages": [
+                    {
+                      "available_sources": [
+                        "google",
+                        "bing",
+                        "amazon"
+                      ],
+                      "language_name": "English",
+                      "language_code": "en",
+                      "keywords": 1179059005,
+                      "serps": 185444359
+                    },
+                    {
+                      "available_sources": [
+                        "google"
+                      ],
+                      "language_name": "Spanish",
+                      "language_code": "es",
+                      "keywords": 157228646,
+                      "serps": 5706649
+                    }
+                  ]
+                },
+                {
+                  "location_code": 2854,
+                  "location_name": "Burkina Faso",
+                  "location_code_parent": null,
+                  "country_iso_code": "BF",
+                  "location_type": "Country",
+                  "available_languages": [
+                    {
+                      "available_sources": [
+                        "google"
+                      ],
+                      "language_name": "French",
+                      "language_code": "fr",
+                      "keywords": 5386850,
+                      "serps": 309698
+                    }
+                  ]
+                },
+                {
+                  "location_code": 2858,
+                  "location_name": "Uruguay",
+                  "location_code_parent": null,
+                  "country_iso_code": "UY",
+                  "location_type": "Country",
+                  "available_languages": [
+                    {
+                      "available_sources": [
+                        "google"
+                      ],
+                      "language_name": "Spanish",
+                      "language_code": "es",
+                      "keywords": 13220029,
+                      "serps": 481568
+                    }
+                  ]
+                },
+                {
+                  "location_code": 2862,
+                  "location_name": "Venezuela",
+                  "location_code_parent": null,
+                  "country_iso_code": "VE",
+                  "location_type": "Country",
+                  "available_languages": [
+                    {
+                      "available_sources": [
+                        "google"
+                      ],
+                      "language_name": "Spanish",
+                      "language_code": "es",
+                      "keywords": 47704709,
+                      "serps": 2294249
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        }
+      }
+    ],
+    "Webhook": [
+      {
+        "json": {
+          "headers": {
+            "host": "agrici.app.n8n.cloud",
+            "user-agent": "node",
+            "content-length": "201",
+            "accept": "*/*",
+            "accept-encoding": "gzip, br",
+            "accept-language": "*",
+            "cdn-loop": "cloudflare; loops=1; subreqs=1",
+            "cf-connecting-ip": "3.84.186.5",
+            "cf-ew-via": "15",
+            "cf-ipcountry": "US",
+            "cf-ray": "9786727363cee76c-IAD",
+            "cf-visitor": "{\"scheme\":\"https\"}",
+            "cf-worker": "n8n.cloud",
+            "content-type": "application/json",
+            "sec-fetch-mode": "cors",
+            "x-forwarded-for": "3.84.186.5, 104.23.209.95",
+            "x-forwarded-host": "agrici.app.n8n.cloud",
+            "x-forwarded-port": "443",
+            "x-forwarded-proto": "https",
+            "x-forwarded-server": "traefik-prod-users-gwc-40-669b86c79-rhnjz",
+            "x-is-trusted": "yes",
+            "x-real-ip": "3.84.186.5",
+            "x-vercel-id": "iad1::6np4k-1756747318222-10d9e596fce2"
+          },
+          "params": {},
+          "query": {},
+          "body": {
+            "type": "text",
+            "message": "Confirm I should execute the keyword and SERP analysis for \"game development Atlanta\"",
+            "timestamp": "2025-09-01T17:21:58.267Z",
+            "country": "United States",
+            "language": "English"
+          },
+          "webhookUrl": "https://agrici.app.n8n.cloud/webhook/articollo",
+          "executionMode": "production"
+        }
+      }
+    ]
+  },
+  "connections": {
+    "🦺 Set Data": {
+      "main": [
+        [
+          {
+            "node": "Keywordo",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "ranked_keywords": {
+      "ai_tool": [
+        [
+          {
+            "node": "Keywordo",
+            "type": "ai_tool",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "related_keywords": {
+      "ai_tool": [
+        [
+          {
+            "node": "Keywordo",
+            "type": "ai_tool",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "keyword_ideas": {
+      "ai_tool": [
+        [
+          {
+            "node": "Keywordo",
+            "type": "ai_tool",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "serp_search": {
+      "ai_tool": [
+        [
+          {
+            "node": "Keywordo",
+            "type": "ai_tool",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Memory": {
+      "ai_memory": [
+        [
+          {
+            "node": "Keywordo",
+            "type": "ai_memory",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "URL_search": {
+      "ai_tool": [
+        [
+          {
+            "node": "Keywordo",
+            "type": "ai_tool",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "ai_mode": {
+      "ai_tool": [
+        [
+          {
+            "node": "Keywordo",
+            "type": "ai_tool",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "internal_links": {
+      "ai_tool": [
+        [
+          {
+            "node": "Keywordo",
+            "type": "ai_tool",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Webhook": {
+      "main": [
+        [
+          {
+            "node": "Code",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Think": {
+      "ai_tool": [
+        [
+          {
+            "node": "Keywordo",
+            "type": "ai_tool",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Transcribe Audio": {
+      "main": [
+        [
+          {
+            "node": "🦺 Set Data",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Set Message": {
+      "main": [
+        [
+          {
+            "node": "🦺 Set Data",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Switch": {
+      "main": [
+        [
+          {
+            "node": "Transcribe Audio",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Set Message",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "2.5 Flash": {
+      "ai_languageModel": [
+        [
+          {
+            "node": "Keywordo",
+            "type": "ai_languageModel",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "2.5 Pro": {
+      "ai_languageModel": [
+        [
+          {
+            "node": "Keywordo",
+            "type": "ai_languageModel",
+            "index": 1
+          }
+        ]
+      ]
+    },
+    "Code": {
+      "main": [
+        [
+          {
+            "node": "Switch",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Keywordo": {
+      "main": [
+        [
+          {
+            "node": "Respond to Webhook",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "active": true,
+  "settings": {
+    "executionOrder": "v1"
+  },
+  "versionId": "55295a3a-fecd-49f5-b53d-155579b820a8",
+  "meta": {
+    "templateCredsSetupCompleted": true,
+    "instanceId": "1ee7b11b3a4bb285563e32fdddf3fbac26379ada529b942ee7cda230735046a1"
+  },
+  "id": "l62oAdA8tFun8RMY",
+  "tags": [
+    {
+      "createdAt": "2025-08-30T21:39:33.374Z",
+      "updatedAt": "2025-08-30T21:39:33.374Z",
+      "id": "vKpSqcYTSNJkrr1N",
+      "name": "Keywordo-kun"
+    }
+  ]
+}

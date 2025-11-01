@@ -1,0 +1,831 @@
+{
+  "name": "Articollo Agent - Keywordo-kun (Tools)",
+  "nodes": [
+    {
+      "parameters": {
+        "workflowInputs": {
+          "values": [
+            {
+              "name": "function"
+            },
+            {
+              "name": "keyword"
+            },
+            {
+              "name": "country_code"
+            },
+            {
+              "name": "language_code"
+            },
+            {
+              "name": "url"
+            },
+            {
+              "name": "firecrawl_api"
+            }
+          ]
+        }
+      },
+      "type": "n8n-nodes-base.executeWorkflowTrigger",
+      "typeVersion": 1.1,
+      "position": [
+        -1536,
+        112
+      ],
+      "id": "cd5354a6-6251-4f76-a515-af163783d95d",
+      "name": "When Executed by Another Workflow"
+    },
+    {
+      "parameters": {
+        "rules": {
+          "values": [
+            {
+              "conditions": {
+                "options": {
+                  "caseSensitive": true,
+                  "leftValue": "",
+                  "typeValidation": "strict",
+                  "version": 2
+                },
+                "conditions": [
+                  {
+                    "id": "8d7d3035-3a57-47ee-b1d1-dd7bfcab9114",
+                    "leftValue": "serp_search",
+                    "rightValue": "={{ $json.function }}",
+                    "operator": {
+                      "type": "string",
+                      "operation": "equals",
+                      "name": "filter.operator.equals"
+                    }
+                  }
+                ],
+                "combinator": "and"
+              },
+              "renameOutput": true,
+              "outputKey": "serp_search"
+            },
+            {
+              "conditions": {
+                "options": {
+                  "caseSensitive": true,
+                  "leftValue": "",
+                  "typeValidation": "strict",
+                  "version": 2
+                },
+                "conditions": [
+                  {
+                    "id": "2b780c97-6538-4cca-b76f-48a752fa2850",
+                    "leftValue": "={{ $json.function }}",
+                    "rightValue": "related_keywords",
+                    "operator": {
+                      "type": "string",
+                      "operation": "equals",
+                      "name": "filter.operator.equals"
+                    }
+                  }
+                ],
+                "combinator": "and"
+              },
+              "renameOutput": true,
+              "outputKey": "related_keywords"
+            },
+            {
+              "conditions": {
+                "options": {
+                  "caseSensitive": true,
+                  "leftValue": "",
+                  "typeValidation": "strict",
+                  "version": 2
+                },
+                "conditions": [
+                  {
+                    "id": "d51fd6e6-51e4-410d-bce8-4a28d55be3ed",
+                    "leftValue": "={{ $json.function }}",
+                    "rightValue": "keyword_ideas",
+                    "operator": {
+                      "type": "string",
+                      "operation": "equals",
+                      "name": "filter.operator.equals"
+                    }
+                  }
+                ],
+                "combinator": "and"
+              },
+              "renameOutput": true,
+              "outputKey": "keyword_ideas"
+            },
+            {
+              "conditions": {
+                "options": {
+                  "caseSensitive": true,
+                  "leftValue": "",
+                  "typeValidation": "strict",
+                  "version": 2
+                },
+                "conditions": [
+                  {
+                    "id": "d45a7db6-2137-4949-adb4-bdd9bc8051f1",
+                    "leftValue": "ranked_keywords",
+                    "rightValue": "={{ $json.function }}",
+                    "operator": {
+                      "type": "string",
+                      "operation": "equals",
+                      "name": "filter.operator.equals"
+                    }
+                  }
+                ],
+                "combinator": "and"
+              },
+              "renameOutput": true,
+              "outputKey": "ranked_keywords"
+            },
+            {
+              "conditions": {
+                "options": {
+                  "caseSensitive": true,
+                  "leftValue": "",
+                  "typeValidation": "strict",
+                  "version": 2
+                },
+                "conditions": [
+                  {
+                    "id": "bb2c23eb-862d-4582-961e-5a8d8338842c",
+                    "leftValue": "ai_mode",
+                    "rightValue": "={{ $json.function }}",
+                    "operator": {
+                      "type": "string",
+                      "operation": "equals",
+                      "name": "filter.operator.equals"
+                    }
+                  }
+                ],
+                "combinator": "and"
+              },
+              "renameOutput": true,
+              "outputKey": "ai_mode"
+            },
+            {
+              "conditions": {
+                "options": {
+                  "caseSensitive": true,
+                  "leftValue": "",
+                  "typeValidation": "strict",
+                  "version": 2
+                },
+                "conditions": [
+                  {
+                    "id": "a91a84bd-3a80-4c1c-99fe-3ce16438641c",
+                    "leftValue": "internal_links",
+                    "rightValue": "={{ $json.function }}",
+                    "operator": {
+                      "type": "string",
+                      "operation": "equals",
+                      "name": "filter.operator.equals"
+                    }
+                  }
+                ],
+                "combinator": "and"
+              },
+              "renameOutput": true,
+              "outputKey": "internal_links"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.switch",
+      "typeVersion": 3.2,
+      "position": [
+        -1264,
+        48
+      ],
+      "id": "53ec5119-2bfb-420f-bbce-0a107b4a9519",
+      "name": "Switch"
+    },
+    {
+      "parameters": {
+        "method": "POST",
+        "url": "https://api.dataforseo.com/v3/dataforseo_labs/google/keyword_ideas/live",
+        "authentication": "genericCredentialType",
+        "genericAuthType": "httpBasicAuth",
+        "sendBody": true,
+        "specifyBody": "json",
+        "jsonBody": "=[\n  {\n    \"keywords\": [\n      \"{{ $json.keyword }}\"\n    ],\n    \"location_code\": {{ $json.country_code }},\n    \"language_code\": \"{{ $json.language_code }}\",\n    \"closely_variants\": true,\n    \"include_serp_info\": true,\n    \"limit\": 50,\n    \"order_by\": [\"keyword_info.search_volume,desc\"]\n  }\n]",
+        "options": {
+          "redirect": {
+            "redirect": {
+              "followRedirects": false
+            }
+          }
+        }
+      },
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [
+        -624,
+        96
+      ],
+      "id": "a70694c1-8714-42d7-b9a5-847ac6e4d429",
+      "name": "Keyword Ideas",
+      "credentials": {
+        "httpBasicAuth": {
+          "id": "n5o00CCWcmHFeI1p",
+          "name": "DataForSEO"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "jsCode": "// This script extracts a specific set of SEO metrics from the DataForSEO API,\n// filters out keywords with low search volume, and sorts the result by the highest volume.\n\n// --- CONFIGURATION ---\nconst MINIMUM_SEARCH_VOLUME = 400;\nconst negativeKeywords = [\n  'login', 'pdf', 'download', 'forum', 'jobs', 'careers',\n  'contact', 'about us', 'log in', 'support'\n];\n\nlet clientBrandName = '';\ntry {\n  clientBrandName = $('Set Client Data').first().json.Company_Name.toLowerCase();\n} catch (error) {\n  console.warn(\"DEBUG INFO: Could not find 'Set Client Data' node. Continuing without brand filter.\");\n}\n// --- END CONFIGURATION ---\n\n// --- MAIN LOGIC ---\nconst allItems = $input.all();\nlet processedKeywords = [];\nconst uniqueKeywords = new Set();\n\nfor (const item of allItems) {\n  const keywordsList = item.json?.tasks?.[0]?.result?.[0]?.items;\n  if (!keywordsList || !Array.isArray(keywordsList)) {\n    continue;\n  }\n\n  for (const keywordData of keywordsList) {\n    const keywordText = keywordData.keyword;\n    if (!keywordText || uniqueKeywords.has(keywordText)) {\n      continue;\n    }\n\n    const searchVolume = keywordData.keyword_info?.search_volume ?? 0;\n\n    if (searchVolume < MINIMUM_SEARCH_VOLUME) continue;\n    if (negativeKeywords.some(neg => keywordText.toLowerCase().includes(neg))) continue;\n    if (clientBrandName && keywordText.toLowerCase().includes(clientBrandName)) continue;\n\n    uniqueKeywords.add(keywordText);\n\n    // --- The three unwanted fields have been removed from this object ---\n    processedKeywords.push({\n      keyword: keywordText,\n      search_volume: searchVolume,\n      cpc: keywordData.keyword_info?.cpc ?? 0,\n      competition: keywordData.keyword_info?.competition ?? 0,\n      competition_level: keywordData.keyword_info?.competition_level ?? 'N/A',\n      main_intent: keywordData.search_intent_info?.main_intent ?? 'unknown'\n    });\n  }\n}\n\n// --- SORTING & FINAL OUTPUT ---\nprocessedKeywords.sort((a, b) => b.search_volume - a.search_volume);\n\n// If no keywords are found, return an empty object in one item to keep the workflow running.\nif (processedKeywords.length === 0) {\n  return [{\n    json: {}\n  }];\n}\n\nreturn processedKeywords.map(keyword => ({\n  json: keyword\n}));"
+      },
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        -384,
+        96
+      ],
+      "id": "7742326b-91a7-4775-82b2-c221a6ef4265",
+      "name": "Filter Keywords1",
+      "retryOnFail": true,
+      "onError": "continueRegularOutput"
+    },
+    {
+      "parameters": {
+        "method": "POST",
+        "url": "https://api.dataforseo.com/v3/dataforseo_labs/google/related_keywords/live",
+        "authentication": "genericCredentialType",
+        "genericAuthType": "httpBasicAuth",
+        "sendBody": true,
+        "specifyBody": "json",
+        "jsonBody": "=[\n  {\n    \"keyword\": \"{{ $json.keyword }}\",\n    \"location_code\": {{ $json.country_code }},\n    \"language_code\": \"{{ $json.language_code }}\",\n    \"depth\": 2,\n    \"include_seed_keyword\": false,\n    \"include_serp_info\": true,\n    \"ignore_synonyms\": true,\n    \"include_clickstream_data\": false,\n    \"replace_with_core_keyword\": true,\n    \"limit\": 40\n  }\n]",
+        "options": {
+          "redirect": {
+            "redirect": {
+              "followRedirects": false
+            }
+          }
+        }
+      },
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [
+        -624,
+        -224
+      ],
+      "id": "a3ce10f1-7c2e-421a-bf76-226d07681aa1",
+      "name": "Related Keywords",
+      "credentials": {
+        "httpBasicAuth": {
+          "id": "n5o00CCWcmHFeI1p",
+          "name": "DataForSEO"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "jsCode": "// This script extracts keywords from a DataForSEO API response,\n// formats them, applies filters, and sorts the result by search volume.\n\n// --- CONFIGURATION ---\nconst MINIMUM_SEARCH_VOLUME = 200; // <<< CHANGED: The minimum search volume is now 200\nconst negativeKeywords = [\n  'login', 'pdf', 'download', 'forum', 'jobs', 'careers',\n  'contact', 'about us', 'log in', 'support'\n];\n\nlet clientBrandName = '';\ntry {\n  clientBrandName = $('Set Client Data').first().json.Company_Name.toLowerCase();\n} catch (error) {\n  // This is expected if the 'Set Client Data' node doesn't exist.\n}\n// --- END CONFIGURATION ---\n\nconst allItems = $input.all();\nlet processedKeywords = [];\nconst uniqueKeywords = new Set();\n\nfor (const item of allItems) {\n  // Correctly navigate the nested DataForSEO structure to get the keyword list\n  const keywordsList = item.json?.tasks?.[0]?.result?.[0]?.items;\n\n  if (!keywordsList || !Array.isArray(keywordsList)) {\n    continue; // Skip if the path is invalid or the list is empty\n  }\n\n  for (const keywordItem of keywordsList) {\n    // The actual data is nested inside the 'keyword_data' object\n    const keywordData = keywordItem.keyword_data;\n    if (!keywordData) continue;\n\n    const keywordText = keywordData.keyword;\n    if (!keywordText || uniqueKeywords.has(keywordText)) {\n      continue;\n    }\n\n    const searchVolume = keywordData.keyword_info?.search_volume ?? 0;\n\n    // Apply filtering logic\n    if (searchVolume < MINIMUM_SEARCH_VOLUME) continue;\n    if (negativeKeywords.some(neg => keywordText.toLowerCase().includes(neg))) continue;\n    if (clientBrandName && keywordText.toLowerCase().includes(clientBrandName)) continue;\n    \n    uniqueKeywords.add(keywordText);\n\n    // Create the final object in the exact structure you requested\n    processedKeywords.push({\n      keyword: keywordText,\n      search_volume: searchVolume,\n      cpc: keywordData.keyword_info?.cpc ?? 0,\n      competition: keywordData.keyword_info?.competition ?? 0,\n      competition_level: keywordData.keyword_info?.competition_level ?? 'N/A',\n      main_intent: keywordData.search_intent_info?.main_intent ?? 'unknown'\n    });\n  }\n}\n\n// Sort all found keywords by search volume, from highest to lowest\nprocessedKeywords.sort((a, b) => b.search_volume - a.search_volume);\n\n// If no keywords are left after filtering, return a single empty item\nif (processedKeywords.length === 0) {\n  return [{ json: {} }];\n}\n\n// Return each processed keyword as a separate item for n8n\nreturn processedKeywords.map(keyword => ({ json: keyword }));"
+      },
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        -400,
+        -224
+      ],
+      "id": "4928e431-4186-4b8f-8326-ede8c4bf584c",
+      "name": "Filter Keywords"
+    },
+    {
+      "parameters": {
+        "jsCode": "// This script aggregates \"Ranked Keywords\" data from multiple competitor inputs,\n// de-duplicates the keywords, and formats the output.\n\n// Use a Set to store unique keywords and prevent duplicates.\nconst uniqueKeywords = new Set();\nconst allFormattedKeywords = [];\n\n// Use $input.all() to get every item passed to this node.\nconst allItems = $input.all();\n\n// Loop through each incoming item.\nfor (const item of allItems) {\n  const itemsList = item.json?.tasks?.[0]?.result?.[0]?.items;\n\n  if (!itemsList || !Array.isArray(itemsList)) {\n    continue;\n  }\n\n  for (const keywordItem of itemsList) {\n    const keywordData = keywordItem.keyword_data || {};\n    const keywordInfo = keywordData.keyword_info || {};\n    const serpItem = keywordItem.ranked_serp_element?.serp_item || {};\n    const keywordText = keywordData.keyword;\n\n    // --- Remove Duplicates ---\n    if (!keywordText || uniqueKeywords.has(keywordText)) {\n      continue;\n    }\n    uniqueKeywords.add(keywordText);\n\n    // Add the formatted object to our final list.\n    allFormattedKeywords.push({\n      json: {\n        target_url: keywordData.target,\n        keyword: keywordText,\n        search_volume: keywordInfo.search_volume,\n        cpc: keywordInfo.cpc,\n        competition_level: keywordInfo.competition_level,\n        estimated_traffic: serpItem.etv\n      }\n    });\n  }\n}\n\n// Sort the final combined list by search volume\nallFormattedKeywords.sort((a, b) => b.json.search_volume - a.json.search_volume);\n\nreturn allFormattedKeywords;"
+      },
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        -384,
+        416
+      ],
+      "id": "eccc3754-ab91-4a94-b6e8-c2121faff466",
+      "name": "Filter keywords",
+      "alwaysOutputData": true
+    },
+    {
+      "parameters": {
+        "method": "POST",
+        "url": "https://api.dataforseo.com/v3/dataforseo_labs/google/ranked_keywords/live",
+        "authentication": "genericCredentialType",
+        "genericAuthType": "httpBasicAuth",
+        "sendBody": true,
+        "specifyBody": "json",
+        "jsonBody": "=[\n  {\n    \"target\": \"{{ $json.url }}\",\n    \"location_code\": {{ $json.country_code }},\n    \"language_code\": \"{{ $json.language_code }}\",\n    \"limit\": 200\n  }\n]",
+        "options": {
+          "redirect": {
+            "redirect": {
+              "followRedirects": false
+            }
+          }
+        }
+      },
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [
+        -624,
+        416
+      ],
+      "id": "82ad4e69-ffb3-4b6d-8c9d-140772d6354f",
+      "name": "Get Their Ranked Keywords",
+      "credentials": {
+        "httpBasicAuth": {
+          "id": "n5o00CCWcmHFeI1p",
+          "name": "DataForSEO"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "method": "POST",
+        "url": "https://api.dataforseo.com/v3/serp/google/organic/live/advanced",
+        "authentication": "genericCredentialType",
+        "genericAuthType": "httpBasicAuth",
+        "sendBody": true,
+        "specifyBody": "json",
+        "jsonBody": "=[\n  {\n    \"keyword\": \"{{ $json.keyword }}\",\n    \"location_code\": {{ $json.country_code }},\n    \"language_code\": \"{{ $json.language_code }}\",\n    \"depth\": 44,\n    \"group_organic_results\": true,\n    \"load_async_ai_overview\": true,\n    \"people_also_ask_click_depth\": 1\n  }\n]",
+        "options": {
+          "redirect": {
+            "redirect": {
+              "followRedirects": false
+            }
+          }
+        }
+      },
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [
+        -624,
+        -544
+      ],
+      "id": "6cb2e205-5308-4626-9ddf-7e2146d6354f",
+      "name": "SERP Google",
+      "credentials": {
+        "httpBasicAuth": {
+          "id": "n5o00CCWcmHFeI1p",
+          "name": "DataForSEO"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "jsCode": "// This script extracts the top 10 ranked results, including AI Overviews,\n// sorts them by position, and formats them into a clean list.\n\n// Helper to safely access nested data\nconst get = (p, o) => p.reduce((xs, x) => (xs && xs[x] != null) ? xs[x] : null, o);\n\nconst item = $input.item;\nconst itemsList = get(['json', 'tasks', 0, 'result', 0, 'items'], item);\n\nif (!Array.isArray(itemsList)) {\n  return [];\n}\n\nconst top10Results = itemsList\n  // 1. Find all relevant results, including 'ai_overview'\n  .filter(item => \n    (item.type === 'organic' || item.type === 'featured_snippet' || item.type === 'ai_overview')\n  )\n  // 2. Sort by position (lowest to highest)\n  .sort((a, b) => a.rank_absolute - b.rank_absolute)\n  // 3. Take only the top 10\n  .slice(0, 10)\n  // 4. Format based on the item type\n  .map(item => {\n    if (item.type === 'ai_overview') {\n      // For AI Overviews, clean the markdown text\n      let cleanDescription = item.markdown || 'No AI summary text available.';\n      // Remove markdown bold tags (**) and reference links like [[1]](...)\n      cleanDescription = cleanDescription.replace(/\\*\\*|\\[\\[\\d+\\]\\]\\(https?:\\/\\/[^\\)]+\\)/g, '');\n\n      return {\n        json: {\n          position: item.rank_absolute,\n          domain: 'Google AI Overview',\n          title: 'AI Overview',\n          url: null,\n          description: cleanDescription.trim() // Return the cleaned text\n        }\n      };\n    } else {\n      // Handle standard organic and featured snippet results\n      return {\n        json: {\n          position: item.rank_absolute,\n          domain: item.domain,\n          title: item.title,\n          url: item.url,\n          description: item.description\n        }\n      };\n    }\n  });\n\nreturn top10Results;"
+      },
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        -416,
+        -544
+      ],
+      "id": "2c29474d-d0a7-49e0-b3f8-f5dda5ce05e4",
+      "name": "Filter Google"
+    },
+    {
+      "parameters": {
+        "content": "## SERP Analysis",
+        "height": 272,
+        "width": 736
+      },
+      "type": "n8n-nodes-base.stickyNote",
+      "typeVersion": 1,
+      "position": [
+        -720,
+        -624
+      ],
+      "id": "b236d348-7e63-4c02-b88e-9eeb12b2f9fb",
+      "name": "Sticky Note2"
+    },
+    {
+      "parameters": {
+        "content": "## Related Keywords",
+        "height": 272,
+        "width": 736,
+        "color": 2
+      },
+      "type": "n8n-nodes-base.stickyNote",
+      "typeVersion": 1,
+      "position": [
+        -720,
+        -304
+      ],
+      "id": "a101c515-89cb-429c-af11-39f8a698025f",
+      "name": "Sticky Note4"
+    },
+    {
+      "parameters": {
+        "content": "## Keyword Ideas",
+        "height": 272,
+        "width": 736,
+        "color": 3
+      },
+      "type": "n8n-nodes-base.stickyNote",
+      "typeVersion": 1,
+      "position": [
+        -720,
+        16
+      ],
+      "id": "703a22e7-d138-4666-a918-b34337a2b95c",
+      "name": "Sticky Note5"
+    },
+    {
+      "parameters": {
+        "content": "## Competitor Ranked Keywords",
+        "height": 272,
+        "width": 736,
+        "color": 4
+      },
+      "type": "n8n-nodes-base.stickyNote",
+      "typeVersion": 1,
+      "position": [
+        -720,
+        336
+      ],
+      "id": "75df2364-67de-438d-a529-55586019d44b",
+      "name": "Sticky Note6"
+    },
+    {
+      "parameters": {
+        "aggregate": "aggregateAllItemData",
+        "destinationFieldName": "serp_results",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.aggregate",
+      "typeVersion": 1,
+      "position": [
+        -208,
+        -544
+      ],
+      "id": "d0f358f8-0e7f-4193-8dcc-f578dedc4ed1",
+      "name": "Aggregate"
+    },
+    {
+      "parameters": {
+        "aggregate": "aggregateAllItemData",
+        "destinationFieldName": "relater_keywords",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.aggregate",
+      "typeVersion": 1,
+      "position": [
+        -208,
+        -224
+      ],
+      "id": "dd8afa87-8691-47e6-8b69-e7f8ea3cd07a",
+      "name": "Aggregate1"
+    },
+    {
+      "parameters": {
+        "aggregate": "aggregateAllItemData",
+        "destinationFieldName": "keyword_ideas",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.aggregate",
+      "typeVersion": 1,
+      "position": [
+        -176,
+        96
+      ],
+      "id": "2d8b74aa-e452-4912-a2dc-0d56100aa5b9",
+      "name": "Aggregate2"
+    },
+    {
+      "parameters": {
+        "aggregate": "aggregateAllItemData",
+        "destinationFieldName": "ranked_keywords",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.aggregate",
+      "typeVersion": 1,
+      "position": [
+        -176,
+        416
+      ],
+      "id": "27dd4981-7f20-49b6-9640-17bff6dd3284",
+      "name": "Aggregate3"
+    },
+    {
+      "parameters": {
+        "content": "",
+        "height": 464,
+        "width": 720,
+        "color": 7
+      },
+      "type": "n8n-nodes-base.stickyNote",
+      "typeVersion": 1,
+      "position": [
+        -1696,
+        -48
+      ],
+      "id": "ec71e95b-3eb5-4c27-92a4-95b8b4bb2df6",
+      "name": "Sticky Note3"
+    },
+    {
+      "parameters": {
+        "content": "## AI Mode",
+        "height": 272,
+        "width": 576,
+        "color": 5
+      },
+      "type": "n8n-nodes-base.stickyNote",
+      "typeVersion": 1,
+      "position": [
+        -720,
+        656
+      ],
+      "id": "b08b3605-58fe-41be-9354-09098ba2ef52",
+      "name": "Sticky Note"
+    },
+    {
+      "parameters": {
+        "method": "POST",
+        "url": "https://api.dataforseo.com/v3/serp/google/ai_mode/live/advanced",
+        "authentication": "genericCredentialType",
+        "genericAuthType": "httpBasicAuth",
+        "sendBody": true,
+        "specifyBody": "json",
+        "jsonBody": "=[\n  {\n    \"keyword\": \"{{ $json.keyword }}\",\n    \"location_code\": {{ $json.country_code }},\n    \"language_code\": \"{{ $json.language_code }}\",\n    \"device\": \"mobile\",\n    \"os\": \"android\"\n  }\n]",
+        "options": {
+          "redirect": {
+            "redirect": {}
+          }
+        }
+      },
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [
+        -624,
+        736
+      ],
+      "id": "8278f05c-6b04-45f5-ba83-fa01cbd62732",
+      "name": "AI Mode",
+      "credentials": {
+        "httpBasicAuth": {
+          "id": "n5o00CCWcmHFeI1p",
+          "name": "DataForSEO"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "jsCode": "// This code runs for each item passed into the node.\n// 'items' is an array of all input items.\n\n// Extract the first (and only) item's JSON data\nconst inputData = items[0].json;\n\n// Navigate to the main result object in the data structure\nconst taskResult = inputData.tasks[0].result[0];\n\n// Find the 'ai_overview' item which contains the main content\nconst aiOverview = taskResult.items.find(item => item.type === 'ai_overview');\n\n// Prepare a new, clean output object\nconst organizedOutput = {};\n\nif (aiOverview) {\n  // 1. Extract the primary keyword for the search\n  organizedOutput.keyword = taskResult.keyword;\n\n  // 2. Extract the full markdown content\n  organizedOutput.markdown_content = aiOverview.markdown;\n\n  // 3. Extract and simplify the list of all unique references\n  // We'll map over the references array to create a cleaner list\n  organizedOutput.references = aiOverview.references.map(ref => {\n    return {\n      source: ref.source,\n      title: ref.title,\n      url: ref.url\n    };\n  });\n}\n\n// Return the newly structured object for the next node in the workflow\nreturn [{\n  json: organizedOutput\n}];"
+      },
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        -384,
+        736
+      ],
+      "id": "38ed9419-c39c-4d3a-8d23-f105a0181c4a",
+      "name": "Filter AI Response",
+      "alwaysOutputData": true
+    },
+    {
+      "parameters": {
+        "method": "POST",
+        "url": "https://api.firecrawl.dev/v1/map",
+        "sendHeaders": true,
+        "headerParameters": {
+          "parameters": [
+            {
+              "name": "Authorization",
+              "value": "=Bearer {{ $json.firecrawl_api }}"
+            }
+          ]
+        },
+        "sendBody": true,
+        "specifyBody": "json",
+        "jsonBody": "={\n    \"url\": \"{{ $json.url }}\",\n    \"includeSubdomains\": true\n}",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [
+        -624,
+        1056
+      ],
+      "id": "88b374bf-4823-47e3-8fe4-8fbf08a5cb6e",
+      "name": "Get Sitemap"
+    },
+    {
+      "parameters": {
+        "content": "## Internal Links",
+        "height": 272,
+        "width": 336,
+        "color": 6
+      },
+      "type": "n8n-nodes-base.stickyNote",
+      "typeVersion": 1,
+      "position": [
+        -720,
+        976
+      ],
+      "id": "e05c61c1-8eb2-4079-81c4-8679a6301bc3",
+      "name": "Sticky Note7"
+    }
+  ],
+  "pinData": {
+    "When Executed by Another Workflow": [
+      {
+        "json": {
+          "function": "related_keywords",
+          "keyword": "best shower filters",
+          "country_code": "2840",
+          "language_code": "en",
+          "url": null,
+          "firecrawl_api": null
+        }
+      }
+    ]
+  },
+  "connections": {
+    "When Executed by Another Workflow": {
+      "main": [
+        [
+          {
+            "node": "Switch",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Switch": {
+      "main": [
+        [
+          {
+            "node": "SERP Google",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Related Keywords",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Keyword Ideas",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Get Their Ranked Keywords",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "AI Mode",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Get Sitemap",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Keyword Ideas": {
+      "main": [
+        [
+          {
+            "node": "Filter Keywords1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Filter Keywords1": {
+      "main": [
+        [
+          {
+            "node": "Aggregate2",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Related Keywords": {
+      "main": [
+        [
+          {
+            "node": "Filter Keywords",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Filter Keywords": {
+      "main": [
+        [
+          {
+            "node": "Aggregate1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Filter keywords": {
+      "main": [
+        [
+          {
+            "node": "Aggregate3",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Get Their Ranked Keywords": {
+      "main": [
+        [
+          {
+            "node": "Filter keywords",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "SERP Google": {
+      "main": [
+        [
+          {
+            "node": "Filter Google",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Filter Google": {
+      "main": [
+        [
+          {
+            "node": "Aggregate",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "AI Mode": {
+      "main": [
+        [
+          {
+            "node": "Filter AI Response",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Filter AI Response": {
+      "main": [
+        []
+      ]
+    },
+    "Get Sitemap": {
+      "main": [
+        []
+      ]
+    }
+  },
+  "active": false,
+  "settings": {
+    "executionOrder": "v1"
+  },
+  "versionId": "379f2f73-a11c-42c7-acca-a4e0207e6bef",
+  "meta": {
+    "templateCredsSetupCompleted": true,
+    "instanceId": "1ee7b11b3a4bb285563e32fdddf3fbac26379ada529b942ee7cda230735046a1"
+  },
+  "id": "edWM6uMdKMV69iXQ",
+  "tags": [
+    {
+      "createdAt": "2025-08-30T21:39:33.374Z",
+      "updatedAt": "2025-08-30T21:39:33.374Z",
+      "id": "vKpSqcYTSNJkrr1N",
+      "name": "Keywordo-kun"
+    }
+  ]
+}
