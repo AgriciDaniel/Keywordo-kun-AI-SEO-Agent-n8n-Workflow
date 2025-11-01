@@ -1,5 +1,3 @@
-![Keywordo-kun Hero Image](Keywordo-kun%20image.png)
-
 ### 📺 Full Video Walkthrough & Setup Guide
 [![Watch the full demo and setup guide on YouTube](Keywordo-kun%20image.png)](https://www.youtube.com/watch?v=r9WMbzfY-mg)
 
