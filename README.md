@@ -1,5 +1,6 @@
 ### 📺 Full Video Walkthrough & Setup Guide
 **Watch the full demo and setup guide on YouTube:** **[Youtube Video](https://www.youtube.com/watch?v=r9WMbzfY-mg&t=)**
+
 Chat interface example: https://articollov2.vercel.app
 
 This repository contains the complete workflow for **Keywordo-kun**, an AI agent specialized in competitor analysis, keyword research, and automated SEO content creation.
