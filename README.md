@@ -56,3 +56,14 @@ To get this workflow running, you will need accounts and API keys for the follow
 5.  **Activate & Test:**
     * Activate your "Agent" n8n workflow.
     * Start chatting with your agent in the v0.dev interface!
+
+---
+
+## Author
+
+Built by [Agrici Daniel](https://agricidaniel.com/about) - AI Workflow Architect.
+
+- [Blog](https://agricidaniel.com/blog) - Deep dives on AI marketing automation
+- [AI Marketing Hub](https://www.skool.com/ai-marketing-hub) - Free community, 2,800+ members
+- [YouTube](https://www.youtube.com/@AgriciDaniel) - Tutorials and demos
+- [All open-source tools](https://github.com/AgriciDaniel)
