@@ -59,6 +59,9 @@ To get this workflow running, you will need accounts and API keys for the follow
 
 ---
 
+
+> For a full content publishing workflow powered by keyword research, see [Rankenstein](https://rankenstein.pro).
+
 ## Author
 
 Built by [Agrici Daniel](https://agricidaniel.com/about) - AI Workflow Architect.
